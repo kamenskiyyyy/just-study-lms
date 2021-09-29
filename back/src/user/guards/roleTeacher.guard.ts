@@ -8,7 +8,7 @@ import {
 import { ExpressRequest } from '../../types/expressRequest.interface';
 
 @Injectable()
-export class RoleCoachGuard implements CanActivate {
+export class RoleTeacherGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest<ExpressRequest>();
 
@@ -16,7 +16,7 @@ export class RoleCoachGuard implements CanActivate {
       throw new HttpException('Вы не авторизованы', HttpStatus.UNAUTHORIZED);
     }
 
-    if (request.user.type === 'coach' || request.user.type === 'admin') {
+    if (request.user.type === 'teacher' || request.user.type === 'admin') {
       return true;
     }
 

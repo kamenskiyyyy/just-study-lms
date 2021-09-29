@@ -27,19 +27,9 @@ export class UserService {
   }
 
   async createUser(createUserDto: CreateUserDto): Promise<UserEntity> {
-    // Проверки на уникальность
-    const userByUsername = await this.userRepository.findOne({
-      username: createUserDto.username,
-    });
     const userByEmail = await this.userRepository.findOne({
       email: createUserDto.email,
     });
-    if (userByUsername) {
-      throw new HttpException(
-        'Пользователь с таким логином уже есть',
-        HttpStatus.UNPROCESSABLE_ENTITY,
-      );
-    }
     if (!!createUserDto.email && userByEmail) {
       throw new HttpException(
         'Пользователь с таким email уже есть',
@@ -60,20 +50,18 @@ export class UserService {
 
   async login(loginUserDto: LoginUserDto): Promise<UserEntity> {
     const user = await this.userRepository.findOne(
-      { username: loginUserDto.username },
+      { email: loginUserDto.email },
       {
         select: [
           'id',
-          'username',
+          'email',
           'password',
           'type',
           'firstName',
           'secondName',
-          'patronymic',
           'birthDate',
           'phone',
-          'email',
-          'children',
+          'telegram',
         ],
       },
     );
@@ -114,7 +102,6 @@ export class UserService {
     return sign(
       {
         id: user.id,
-        username: user.username,
         email: user.email,
       },
       this.configService.get('JWT_SECRET'),

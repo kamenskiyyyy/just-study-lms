@@ -1,4 +1,5 @@
 import {
+  IsBoolean,
   IsDate,
   IsEmail,
   IsNumber,
@@ -8,8 +9,8 @@ import {
 
 export class UpdateUserDto {
   @IsOptional()
-  @IsString()
-  username: string;
+  @IsEmail()
+  email: string;
 
   @IsOptional()
   @IsString()
@@ -24,10 +25,6 @@ export class UpdateUserDto {
   secondName: string;
 
   @IsOptional()
-  @IsString()
-  patronymic: string;
-
-  @IsOptional()
   @IsDate()
   birthDate: Date;
 
@@ -36,6 +33,10 @@ export class UpdateUserDto {
   phone: number;
 
   @IsOptional()
-  @IsEmail()
-  email: string;
+  @IsString()
+  telegram: string;
+
+  @IsOptional()
+  @IsBoolean()
+  status: boolean;
 }

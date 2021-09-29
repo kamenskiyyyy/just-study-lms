@@ -1,4 +1,5 @@
 import {
+  IsBoolean,
   IsDateString,
   IsEmail,
   IsNotEmpty,
@@ -9,9 +10,9 @@ import {
 import { Type } from 'class-transformer';
 
 export class CreateUserDto {
-  @IsNotEmpty()
-  @IsString()
-  username: string;
+  @IsOptional()
+  @IsEmail()
+  email: string;
 
   @IsNotEmpty()
   @IsString()
@@ -19,17 +20,13 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsString()
-  type: string;
+  type: 'admin' | 'user' | 'teacher' | 'manager';
 
   @IsString()
   firstName: string;
 
   @IsString()
   secondName: string;
-
-  @IsOptional()
-  @IsString()
-  patronymic: string;
 
   @IsNotEmpty()
   @IsDateString()
@@ -41,6 +38,10 @@ export class CreateUserDto {
   phone: number;
 
   @IsOptional()
-  @IsEmail()
-  email: string;
+  @IsString()
+  telegram: string;
+
+  @IsOptional()
+  @IsBoolean()
+  status: boolean;
 }
