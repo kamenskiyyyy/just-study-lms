@@ -32,7 +32,7 @@ export class UserEntity {
   @Column('bigint', { default: null })
   phone: number;
 
-  @Column()
+  @Column({ default: null })
   telegram: string;
 
   @Column({ default: true })
