@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useActions } from './hooks/useActions';
+import { useTypedSelector } from './hooks/useTypedSelector';
+import { useEffect } from 'react';
+import { RouterPages } from './pages/RouterPages';
+import { Container } from '@mui/material';
 
 function App() {
+  const {setIsAuth} = useActions();
+  const {isLogin} = useTypedSelector(state => state.auth);
+
+  useEffect(() => {
+    if (localStorage.getItem('jwt')) {
+      setIsAuth(true)
+    }
+  }, [isLogin])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Container component="main" maxWidth="xs">
+      <RouterPages />
+    </Container>
+  )
 }
 
 export default App;
