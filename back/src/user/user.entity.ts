@@ -1,12 +1,13 @@
 import {
   BeforeInsert,
   Column,
-  Entity,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-import { hash } from 'bcryptjs';
+  Entity, JoinTable, ManyToMany,
+  PrimaryGeneratedColumn
+} from "typeorm";
+import { hash } from "bcryptjs";
+import { CoursesEntity } from "../courses/courses.entity";
 
-@Entity({ name: 'users' })
+@Entity({ name: "users" })
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -17,8 +18,8 @@ export class UserEntity {
   @Column({ select: false })
   password: string;
 
-  @Column({ default: 'user' })
-  type: 'admin' | 'user' | 'teacher' | 'manager';
+  @Column({ default: "user" })
+  type: "admin" | "user" | "teacher" | "manager";
 
   @Column({ default: null })
   firstName: string;
@@ -29,7 +30,7 @@ export class UserEntity {
   @Column()
   birthDate: Date;
 
-  @Column('bigint', { default: null })
+  @Column("bigint", { default: null })
   phone: number;
 
   @Column({ default: null })
@@ -42,4 +43,8 @@ export class UserEntity {
   async hashPassword() {
     this.password = await hash(this.password, 10);
   }
+
+  @ManyToMany(() => CoursesEntity, (course) => course.students, { cascade: true })
+  @JoinTable()
+  courses: CoursesEntity[];
 }
