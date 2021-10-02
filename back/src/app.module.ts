@@ -6,12 +6,14 @@ import { ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { AuthMiddleware } from './user/middlewares/auth.middleware';
 import { CoursesModule } from './courses/courses.module';
+import { PassModule } from "./pass/pass.module";
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(),
     UserModule,
-    CoursesModule
+    CoursesModule,
+    PassModule
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService],

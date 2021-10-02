@@ -1,7 +1,13 @@
-import { BeforeUpdate, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
-import { UserEntity } from "../user/user.entity";
+import {
+  BeforeUpdate,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { PassEntity } from '../pass/pass.entity';
 
-@Entity({ name: "courses" })
+@Entity({ name: 'courses' })
 export class CoursesEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -15,10 +21,10 @@ export class CoursesEntity {
   @Column()
   category: string;
 
-  @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
-  @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: Date;
 
   @BeforeUpdate()
@@ -26,7 +32,6 @@ export class CoursesEntity {
     this.updatedAt = new Date();
   }
 
-  @ManyToMany(() => UserEntity, (user) => user.courses)
-  @JoinTable()
-  students: UserEntity[];
+  @OneToMany(() => PassEntity, (user) => user.course)
+  coursesToUsers: PassEntity[];
 }
