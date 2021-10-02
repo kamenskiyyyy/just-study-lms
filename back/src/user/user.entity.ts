@@ -1,11 +1,11 @@
 import {
   BeforeInsert,
   Column,
-  Entity, JoinTable, ManyToMany,
+  Entity, OneToMany,
   PrimaryGeneratedColumn
 } from "typeorm";
 import { hash } from "bcryptjs";
-import { CoursesEntity } from "../courses/courses.entity";
+import { PassEntity } from "../pass/pass.entity";
 
 @Entity({ name: "users" })
 export class UserEntity {
@@ -44,7 +44,6 @@ export class UserEntity {
     this.password = await hash(this.password, 10);
   }
 
-  @ManyToMany(() => CoursesEntity, (course) => course.students, { cascade: true })
-  @JoinTable()
-  courses: CoursesEntity[];
+  @OneToMany(() => PassEntity, (course) => course.user)
+  usersToCourses: PassEntity[];
 }

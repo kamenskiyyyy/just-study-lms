@@ -45,7 +45,14 @@ export class UserService {
   }
 
   async findById(id: number): Promise<UserEntity> {
-    return this.userRepository.findOne(id);
+    const user = await this.userRepository.findOne(id);
+    if (!user) {
+      throw new HttpException(
+        'Пользователь не найден',
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    }
+    return user;
   }
 
   async login(loginUserDto: LoginUserDto): Promise<UserEntity> {
