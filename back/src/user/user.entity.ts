@@ -44,6 +44,6 @@ export class UserEntity {
     this.password = await hash(this.password, 10);
   }
 
-  @OneToMany(() => PassEntity, (course) => course.user)
+  @OneToMany(() => PassEntity, (course) => course.owner)
   usersToCourses: PassEntity[];
 }

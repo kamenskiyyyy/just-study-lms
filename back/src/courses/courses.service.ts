@@ -17,7 +17,7 @@ export class CoursesService {
   }
 
   async getCourse(courseId: number): Promise<CoursesEntity> {
-    return await this.coursesRepository.findOne({ id: courseId });
+    return await this.findById(courseId);
   }
 
   async createCourse(createCourseDto: CreateCourseDto): Promise<CoursesEntity> {

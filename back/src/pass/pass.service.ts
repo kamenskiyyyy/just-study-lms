@@ -20,7 +20,7 @@ export class PassService {
   }
 
   async getPassUser(userId: number): Promise<PassEntity[]> {
-    return await this.passRepository.find({ where: { user: userId } });
+    return await this.passRepository.find({ where: { owner: userId } });
   }
 
   async payPass(
@@ -33,7 +33,7 @@ export class PassService {
     const pass = new PassEntity();
     Object.assign(pass, createPass);
     pass.course = course;
-    pass.user = user;
+    pass.owner = user;
     return await this.passRepository.save(pass);
   }
 

@@ -36,9 +36,9 @@ export class PassEntity {
     this.updatedAt = new Date();
   }
 
-  @ManyToOne(() => CoursesEntity, (course) => course.coursesToUsers)
+  @ManyToOne(() => CoursesEntity, (course) => course.coursesToUsers, {eager: true})
   course: CoursesEntity;
 
-  @ManyToOne(() => UserEntity, (user) => user.usersToCourses)
-  user: UserEntity;
+  @ManyToOne(() => UserEntity, (user) => user.usersToCourses, {eager: true})
+  owner: UserEntity;
 }

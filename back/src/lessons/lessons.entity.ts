@@ -2,14 +2,13 @@ import {
   BeforeUpdate,
   Column,
   Entity,
-  OneToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { PassEntity } from '../pass/pass.entity';
-import { LessonsEntity } from '../lessons/lessons.entity';
+import { CoursesEntity } from '../courses/courses.entity';
 
-@Entity({ name: 'courses' })
-export class CoursesEntity {
+@Entity('lessons')
+export class LessonsEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -20,7 +19,19 @@ export class CoursesEntity {
   description: string;
 
   @Column()
-  category: string;
+  numbering: number;
+
+  @Column('text', { array: true })
+  file: string[];
+
+  @Column()
+  body: string;
+
+  @Column({ default: false })
+  watched: boolean;
+
+  @Column({ default: false })
+  block: boolean;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
@@ -33,9 +44,6 @@ export class CoursesEntity {
     this.updatedAt = new Date();
   }
 
-  @OneToMany(() => PassEntity, (user) => user.course)
-  coursesToUsers: PassEntity[];
-
-  @OneToMany(() => LessonsEntity, (lesson) => lesson.course, {eager: true})
-  lessons: LessonsEntity[];
+  @ManyToOne(() => CoursesEntity, (course) => course.lessons)
+  course: CoursesEntity;
 }

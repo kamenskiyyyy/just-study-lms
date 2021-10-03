@@ -31,7 +31,7 @@ export class PassController {
     return this.passService.getPassUser(userId);
   }
 
-  @Post('pay')
+  @Post()
   @UseGuards(RoleAdminGuard)
   async payPass(
     @Query('course-id') courseId: number,
