@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { PassEntity } from '../pass/pass.entity';
+import { LessonsEntity } from '../lessons/lessons.entity';
 
 @Entity({ name: 'courses' })
 export class CoursesEntity {
@@ -34,4 +35,7 @@ export class CoursesEntity {
 
   @OneToMany(() => PassEntity, (user) => user.course)
   coursesToUsers: PassEntity[];
+
+  @OneToMany(() => LessonsEntity, (lesson) => lesson.course, {eager: true})
+  lessons: LessonsEntity[];
 }

@@ -24,16 +24,21 @@ export class UserController {
 
   @Get()
   @UseGuards(AuthGuard)
-  @UseGuards(RoleAdminGuard)
   async getAllUsers(): Promise<UserEntity[]> {
     return this.userService.getAllUsers();
   }
 
   @Get('user')
   @UseGuards(AuthGuard)
-  @UseGuards(RoleAdminGuard)
   async getAllUsersTypeUser(): Promise<UserEntity[]> {
     return this.userService.getAllUsersTypeUser();
+  }
+
+  @Get('me')
+  @UseGuards(AuthGuard)
+  async currentUser(@User() user: UserEntity): Promise<UserResponseInterface> {
+    debugger
+    return this.userService.buildUserResponse(user);
   }
 
   @Post('create')
@@ -56,13 +61,6 @@ export class UserController {
       maxAge: 36000000,
     });
     return login;
-  }
-
-  @Get('user')
-  @UseGuards(AuthGuard)
-  @UseGuards(RoleAdminGuard)
-  async currentUser(@User() user: UserEntity): Promise<UserResponseInterface> {
-    return this.userService.buildUserResponse(user);
   }
 
   @Put('user')
