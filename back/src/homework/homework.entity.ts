@@ -25,4 +25,7 @@ export class HomeworkEntity {
 
   @Column({ default: false })
   block: boolean;
+
+  @Column({ default: true })
+  isPublished: boolean;
 }

@@ -28,4 +28,8 @@ export class CreateHomeworkDto {
   @IsOptional()
   @IsBoolean()
   block: boolean;
+
+  @IsOptional()
+  @IsBoolean()
+  isPublished: boolean;
 }

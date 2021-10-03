@@ -11,4 +11,8 @@ export class ParamLessonsDto {
   @IsOptional()
   @IsBoolean()
   block: boolean;
+
+  @IsOptional()
+  @IsBoolean()
+  isPublished: boolean;
 }

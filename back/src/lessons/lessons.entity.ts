@@ -33,6 +33,9 @@ export class LessonsEntity {
   @Column({ default: false })
   block: boolean;
 
+  @Column({ default: true })
+  isPublished: boolean;
+
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 

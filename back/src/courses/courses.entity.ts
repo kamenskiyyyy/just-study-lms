@@ -22,6 +22,9 @@ export class CoursesEntity {
   @Column()
   category: string;
 
+  @Column({ default: true })
+  isPublished: boolean;
+
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
@@ -36,6 +39,6 @@ export class CoursesEntity {
   @OneToMany(() => PassEntity, (user) => user.course)
   coursesToUsers: PassEntity[];
 
-  @OneToMany(() => LessonsEntity, (lesson) => lesson.course, {eager: true})
+  @OneToMany(() => LessonsEntity, (lesson) => lesson.course, { eager: true })
   lessons: LessonsEntity[];
 }

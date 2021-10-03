@@ -1,4 +1,4 @@
-import { IsArray, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { IsArray, IsBoolean, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class CreateCourseDto {
   @IsNotEmpty()
@@ -12,4 +12,8 @@ export class CreateCourseDto {
   @IsOptional()
   @IsArray()
   category: [];
+
+  @IsOptional()
+  @IsBoolean()
+  isPublished: boolean;
 }

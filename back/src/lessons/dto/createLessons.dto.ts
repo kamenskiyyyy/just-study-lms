@@ -28,4 +28,8 @@ export class CreateLessonsDto {
   @IsOptional()
   @IsBoolean()
   block: boolean;
+
+  @IsOptional()
+  @IsBoolean()
+  isPublished: boolean;
 }
