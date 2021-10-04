@@ -21,7 +21,7 @@ export interface IUserLogin {
 }
 
 export const LoginPage = () => {
-  const { loading } = useTypedSelector(state => state.auth);
+  const { loading, error } = useTypedSelector(state => state.auth);
   const { login } = useActions();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -45,6 +45,7 @@ export const LoginPage = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component='h1' variant='h5'>Авторизация</Typography>
+        {error && <Typography mt={1} visibility={error ? 'visible' : 'hidden'} color="red">Неправильная почта или пароль</Typography>}
         <Box component='form' onSubmit={onSubmit} sx={{ mt: 1 }}>
           <TextField
             margin='normal'
