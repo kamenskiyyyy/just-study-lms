@@ -9,7 +9,7 @@ function preventDefault(e: React.MouseEvent) {
 
 export default function CurrentCourseWidget() {
   return (
-    <React.Fragment>
+    <>
       <Title>Текущий курс</Title>
       <Typography component="p" variant="h4">
         #НАСТАРТЕ
@@ -22,6 +22,6 @@ export default function CurrentCourseWidget() {
           Перейти
         </Link>
       </div>
-    </React.Fragment>
+    </>
   );
 }

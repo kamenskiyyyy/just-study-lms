@@ -9,29 +9,30 @@ class ApiService {
     this.headers = options.headers;
   }
 
-  async get(path: string, query?: Record<string, string>) {
-    return this.request({ path, query, method: 'GET' });
+  async get(path: string, auth?:boolean, query?: Record<string, string>) {
+    return this.request({ path, query, method: 'GET', auth });
   }
 
-  post(path: string, data: Object, query?: Record<string, string>) {
-    return this.request({ path, query, method: 'POST', body: data });
+  post(path: string, data: Object, auth?:boolean, query?: Record<string, string>) {
+    return this.request({ path, query, method: 'POST', body: data, auth });
   }
 
-  put(path: string, data: Object, query?: Record<string, string>) {
-    return this.request({ path, query, method: 'PUT', body: data });
+  put(path: string, data: Object, auth?:boolean, query?: Record<string, string>) {
+    return this.request({ path, query, method: 'PUT', body: data, auth });
   }
 
-  patch(path: string, data: Object, query?: Record<string, string>) {
-    return this.request({ path, query, method: 'PATCH', body: data });
+  patch(path: string, data: Object, auth?:boolean, query?: Record<string, string>) {
+    return this.request({ path, query, method: 'PATCH', body: data, auth });
   }
 
-  delete(path: string, data: Object, query?: Record<string, string>) {
-    return this.request({ path, query, method: 'DELETE', body: data });
+  delete(path: string, data: Object, auth?:boolean, query?: Record<string, string>) {
+    return this.request({ path, query, method: 'DELETE', body: data, auth });
   }
 
   private async request({ path, method, ...options }: IRequest) {
     const headers = new Headers(this.headers);
-    ApiService.contentDefault(headers, 'application/json; charset=utf-8');
+
+    ApiService.contentDefault(headers, 'application/json; charset=utf-8', options.auth);
 
     const query = queryToString(options.query);
 
@@ -49,9 +50,12 @@ class ApiService {
       });
   }
 
-  private static contentDefault(headers: Headers, type: string): Headers {
+  private static contentDefault(headers: Headers, type: string, auth?: boolean): Headers {
     if (!headers.has('content-type')) {
       headers.set('content-type', type);
+    }
+    if (auth) {
+      headers.set('Authorization', `Bearer ${<string>localStorage.getItem('jwt')}`)
     }
     return headers;
   }
