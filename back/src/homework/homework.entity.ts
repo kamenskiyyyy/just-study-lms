@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { LessonsEntity } from '../lessons/lessons.entity';
 
 @Entity('homeworks')
 export class HomeworkEntity {
@@ -8,10 +9,10 @@ export class HomeworkEntity {
   @Column()
   title: string;
 
-  @Column({default: null})
+  @Column({ default: null })
   description: string;
 
-  @Column({default: null})
+  @Column({ default: null })
   prompt: string;
 
   @Column({ default: false })
@@ -26,6 +27,9 @@ export class HomeworkEntity {
   @Column({ default: false })
   block: boolean;
 
-  @Column({ default: true })
+  @Column({ default: false })
   isPublished: boolean;
+
+  @ManyToOne(() => LessonsEntity, (lesson) => lesson.homeworks)
+  lesson: LessonsEntity;
 }

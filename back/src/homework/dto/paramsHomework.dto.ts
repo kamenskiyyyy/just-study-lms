@@ -1,9 +1,6 @@
-import {
-  IsBoolean,
-  IsOptional,
-} from 'class-validator';
+import { IsBoolean, IsOptional } from "class-validator";
 
-export class ParamLessonsDto {
+export class ParamsHomeworkDto {
   @IsOptional()
   @IsBoolean()
   watched: boolean;
