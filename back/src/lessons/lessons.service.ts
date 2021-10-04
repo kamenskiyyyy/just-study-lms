@@ -4,7 +4,7 @@ import { LessonsEntity } from './lessons.entity';
 import { DeleteResult, Repository } from 'typeorm';
 import { CreateLessonsDto } from './dto/createLessons.dto';
 import { CoursesService } from '../courses/courses.service';
-import { ParamLessonsDto } from './dto/paramLessons.dto';
+import { ParamsLessonsDto } from './dto/paramsLessons.dto';
 
 @Injectable()
 export class LessonsService {
@@ -49,10 +49,10 @@ export class LessonsService {
 
   async editParamsLesson(
     lessonId: number,
-    paramLesson: ParamLessonsDto,
+    paramsLesson: ParamsLessonsDto,
   ): Promise<LessonsEntity> {
     const lesson = await this.findById(lessonId);
-    Object.assign(lesson, paramLesson);
+    Object.assign(lesson, paramsLesson);
     return await this.lessonsRepository.save(lesson);
   }
 

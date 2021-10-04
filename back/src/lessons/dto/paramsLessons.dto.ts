@@ -3,7 +3,7 @@ import {
   IsOptional,
 } from 'class-validator';
 
-export class ParamLessonsDto {
+export class ParamsLessonsDto {
   @IsOptional()
   @IsBoolean()
   watched: boolean;
@@ -11,4 +11,8 @@ export class ParamLessonsDto {
   @IsOptional()
   @IsBoolean()
   block: boolean;
+
+  @IsOptional()
+  @IsBoolean()
+  isPublished: boolean;
 }

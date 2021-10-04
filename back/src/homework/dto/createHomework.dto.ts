@@ -1,6 +1,6 @@
-import { IsArray, IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsBoolean, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
-export class CreateLessonsDto {
+export class CreateHomeworkDto {
   @IsNotEmpty()
   @IsString()
   title: string;
@@ -10,14 +10,14 @@ export class CreateLessonsDto {
   description: string;
 
   @IsOptional()
-  @IsNumber()
-  numbering: number;
+  @IsString()
+  prompt: string;
 
   @IsOptional()
-  @IsArray()
-  file: string[];
+  @IsBoolean()
+  done: boolean;
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
   body: string;
 

@@ -14,7 +14,7 @@ import { LessonsEntity } from './lessons.entity';
 import { CreateLessonsDto } from './dto/createLessons.dto';
 import { RoleAdminGuard } from '../user/guards/roleAdmin.guard';
 import { DeleteResult } from 'typeorm';
-import { ParamLessonsDto } from './dto/paramLessons.dto';
+import { ParamsLessonsDto } from './dto/paramsLessons.dto';
 
 @Controller('lessons')
 export class LessonsController {
@@ -59,8 +59,8 @@ export class LessonsController {
   @UseGuards(RoleAdminGuard)
   async editParamsLesson(
     @Query('lesson-id') lessonId: number,
-    @Body() paramLesson: ParamLessonsDto,
+    @Body() paramsLesson: ParamsLessonsDto,
   ): Promise<LessonsEntity> {
-    return this.lessonsService.editParamsLesson(lessonId, paramLesson);
+    return this.lessonsService.editParamsLesson(lessonId, paramsLesson);
   }
 }

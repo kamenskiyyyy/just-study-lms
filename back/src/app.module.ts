@@ -8,6 +8,7 @@ import { AuthMiddleware } from './user/middlewares/auth.middleware';
 import { CoursesModule } from './courses/courses.module';
 import { PassModule } from './pass/pass.module';
 import { LessonsModule } from './lessons/lessons.module';
+import { HomeworkModule } from './homework/homework.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { LessonsModule } from './lessons/lessons.module';
     CoursesModule,
     PassModule,
     LessonsModule,
+    HomeworkModule,
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService],

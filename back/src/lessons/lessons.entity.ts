@@ -3,9 +3,11 @@ import {
   Column,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { CoursesEntity } from '../courses/courses.entity';
+import { HomeworkEntity } from '../homework/homework.entity';
 
 @Entity('lessons')
 export class LessonsEntity {
@@ -33,6 +35,9 @@ export class LessonsEntity {
   @Column({ default: false })
   block: boolean;
 
+  @Column({ default: true })
+  isPublished: boolean;
+
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
@@ -46,4 +51,7 @@ export class LessonsEntity {
 
   @ManyToOne(() => CoursesEntity, (course) => course.lessons)
   course: CoursesEntity;
+
+  @OneToMany(() => HomeworkEntity, (homework) => homework.lesson, {eager: true})
+  homeworks: HomeworkEntity[];
 }
