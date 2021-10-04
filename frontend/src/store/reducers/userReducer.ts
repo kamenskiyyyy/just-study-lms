@@ -1,13 +1,26 @@
+interface IUser {
+  id: number;
+  email: string;
+  password: string;
+  type: 'admin' | 'user' | 'teacher' | 'manager';
+  firstName: string;
+  secondName: string;
+  birthDate: Date;
+  phone: number;
+  telegram: string;
+  status: boolean;
+}
+
 interface IUserState {
-  user: any,
-  loading: boolean,
-  error: null | string
+  user: IUser;
+  loading: boolean;
+  error: null | string;
 }
 
 export enum UserActionTypes {
-  GET_INFO_CURRENT_USER = "GET_INFO_CURRENT_USER",
-  GET_INFO_CURRENT_USER_SUCCESS = "GET_INFO_CURRENT_USER_SUCCESS",
-  GET_INFO_CURRENT_USER_ERROR = "GET_INFO_CURRENT_USER_ERROR"
+  GET_INFO_CURRENT_USER = 'GET_INFO_CURRENT_USER',
+  GET_INFO_CURRENT_USER_SUCCESS = 'GET_INFO_CURRENT_USER_SUCCESS',
+  GET_INFO_CURRENT_USER_ERROR = 'GET_INFO_CURRENT_USER_ERROR',
 }
 
 interface IGetUserAction {
@@ -16,7 +29,7 @@ interface IGetUserAction {
 
 interface IGetUserSuccessAction {
   type: UserActionTypes.GET_INFO_CURRENT_USER_SUCCESS;
-  payload: any[];
+  payload: IUser;
 }
 
 interface IGetUserErrorAction {
@@ -27,9 +40,9 @@ interface IGetUserErrorAction {
 export type UserAction = IGetUserAction | IGetUserSuccessAction | IGetUserErrorAction;
 
 const initialState: IUserState = {
-  user: [],
+  user: [] as unknown as IUser,
   loading: false,
-  error: null
+  error: null,
 };
 
 export const userReducer = (state = initialState, action: UserAction): IUserState => {
@@ -37,9 +50,9 @@ export const userReducer = (state = initialState, action: UserAction): IUserStat
     case UserActionTypes.GET_INFO_CURRENT_USER:
       return { ...state, loading: true };
     case UserActionTypes.GET_INFO_CURRENT_USER_SUCCESS:
-      return { loading: false, error: null, user: action.payload };
+      return { ...state, loading: false, user: action.payload };
     case UserActionTypes.GET_INFO_CURRENT_USER_ERROR:
-      return { loading: false, error: action.payload, user: [] };
+      return { ...state, loading: false, error: action.payload };
     default:
       return state;
   }

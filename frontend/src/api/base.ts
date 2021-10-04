@@ -1,4 +1,4 @@
-import * as queryString from "querystring";
+import * as queryString from 'querystring';
 
 export interface IApiService {
   baseUrl: string;
@@ -9,18 +9,17 @@ export interface IRequest {
   baseUrl?: string;
   path: string;
   method: 'POST' | 'GET' | 'DELETE' | 'PUT' | 'PATCH';
+  auth?: boolean;
   body?: Object;
   query?: Record<string, string>;
   headers?: Record<string, string>;
 }
 
-export function queryToString(
-  query: Record<string, string> | undefined,
-): string {
+export function queryToString(query: Record<string, string> | undefined): string {
   return query ? `?${queryString.stringify(query)}` : '';
 }
 
-export function handleOriginalResponse (res: Response) {
+export function handleOriginalResponse(res: Response) {
   if (res.ok) {
     return res.json();
   }

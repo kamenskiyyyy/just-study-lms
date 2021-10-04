@@ -2,23 +2,25 @@ import { useActions } from './hooks/useActions';
 import { useTypedSelector } from './hooks/useTypedSelector';
 import { useEffect } from 'react';
 import { RouterPages } from './pages/RouterPages';
-import { Container } from '@mui/material';
+import { Box } from "@mui/material";
+import { NavBar } from "./components/NavBar";
 
 function App() {
-  const {setIsAuth} = useActions();
-  const {isLogin} = useTypedSelector(state => state.auth);
+  const { setIsAuth } = useActions();
+  const { isLogin } = useTypedSelector((state) => state.auth);
 
   useEffect(() => {
     if (localStorage.getItem('jwt')) {
-      setIsAuth(true)
+      setIsAuth(true);
     }
-  }, [isLogin])
+  }, [isLogin]);
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Box sx={{ display: 'flex' }}>
+      <NavBar />
       <RouterPages />
-    </Container>
-  )
+    </Box>
+  );
 }
 
 export default App;

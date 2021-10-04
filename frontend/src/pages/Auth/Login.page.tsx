@@ -45,7 +45,7 @@ export const LoginPage = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component='h1' variant='h5'>Авторизация</Typography>
-        {error && <Typography mt={1} visibility={error ? 'visible' : 'hidden'} color="red">Неправильная почта или пароль</Typography>}
+        {error && <Typography mt={1} visibility={error ? 'visible' : 'hidden'} color="red">{error}</Typography>}
         <Box component='form' onSubmit={onSubmit} sx={{ mt: 1 }}>
           <TextField
             margin='normal'
