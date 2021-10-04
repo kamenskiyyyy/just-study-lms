@@ -19,8 +19,8 @@ export class CoursesEntity {
   @Column()
   description: string;
 
-  @Column()
-  category: string;
+  @Column('text', { array: true, default: [] })
+  category: string[];
 
   @Column({ default: true })
   isPublished: boolean;
