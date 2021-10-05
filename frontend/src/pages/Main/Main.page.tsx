@@ -29,13 +29,12 @@ function Copyright(props: any) {
 
 export function MainPage() {
   const { loading, error, courses } = useTypedSelector((state) => state.courses);
-  const { getAllCourse } = useActions();
+  const { getAllCourses, getUserInfo } = useActions();
 
   useEffect(() => {
-    getAllCourse();
-    console.log(courses);
-    console.log(error);
-  }, []);
+    getUserInfo();
+    getAllCourses();
+  }, [])
 
   return (
     <Box

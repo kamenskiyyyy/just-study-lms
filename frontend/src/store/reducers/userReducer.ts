@@ -1,4 +1,4 @@
-interface IUser {
+export interface IUser {
   id: number;
   email: string;
   password: string;
@@ -40,7 +40,7 @@ interface IGetUserErrorAction {
 export type UserAction = IGetUserAction | IGetUserSuccessAction | IGetUserErrorAction;
 
 const initialState: IUserState = {
-  user: [] as unknown as IUser,
+  user: {} as IUser,
   loading: false,
   error: null,
 };

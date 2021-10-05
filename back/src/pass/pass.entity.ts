@@ -14,6 +14,9 @@ export class PassEntity {
   id: number;
 
   @Column()
+  label: string;
+
+  @Column()
   status: boolean;
 
   @Column()

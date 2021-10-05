@@ -33,6 +33,7 @@ export class PassService {
     const pass = new PassEntity();
     Object.assign(pass, createPass);
     pass.course = course;
+    pass.label = course.title;
     pass.owner = user;
     return await this.passRepository.save(pass);
   }
