@@ -5,6 +5,7 @@ import { MainPage } from './Main/Main.page';
 import { useTypedSelector } from '../hooks/useTypedSelector';
 import { RegisterPage } from './Auth/Register.page';
 import { StorePage } from './Store/Store.page';
+import { CoursePage } from './Course/Course.page';
 
 interface IRoute {
   path: string;
@@ -17,6 +18,7 @@ export enum RouteNames {
   REGISTER = '/signup',
   MAIN = '/',
   STORE = '/store',
+  COURSE = '/course/:id',
 }
 
 export const publicRoutes: IRoute[] = [
@@ -27,6 +29,7 @@ export const publicRoutes: IRoute[] = [
 export const privateRoutes: IRoute[] = [
   { path: RouteNames.MAIN, exact: true, component: MainPage },
   { path: RouteNames.STORE, exact: true, component: StorePage },
+  { path: RouteNames.COURSE, exact: false, component: CoursePage },
 ];
 
 export function RouterPages() {

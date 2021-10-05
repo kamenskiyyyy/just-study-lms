@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Link from '@mui/material/Link';
+import { NavLink } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { Fragment, useEffect, useState } from 'react';
@@ -8,10 +9,6 @@ import { formatDate } from '../../formatDate';
 import { TextField } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import { IPass } from '../../store/reducers/passReducer';
-
-function preventDefault(e: React.MouseEvent) {
-  e.preventDefault();
-}
 
 export default function CurrentCourseWidget() {
   const { pass } = useTypedSelector((state) => state.pass);
@@ -45,7 +42,7 @@ export default function CurrentCourseWidget() {
               от {formatDate(item.course.createdAt)}
             </Typography>
             <div>
-              <Link color="primary" href={`/course/${item.course.id}`} onClick={preventDefault}>
+              <Link color="primary" to={`/course/${item.course.id}`} component={NavLink}>
                 Перейти
               </Link>
             </div>
