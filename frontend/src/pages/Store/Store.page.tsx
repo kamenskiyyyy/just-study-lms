@@ -1,27 +1,22 @@
+import Title from '../../components/Title';
 import Toolbar from '@mui/material/Toolbar';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import LearningProgressWidget from './LearningProgress.widget';
-import CurrentCourseWidget from './CurrentCourse.widget';
-import Box from '@mui/material/Box';
 import * as React from 'react';
+import Grid from '@mui/material/Grid';
+import { Box, Button, Card, CardContent, CardMedia, CircularProgress, Container, Fab, Paper } from '@mui/material';
 import Typography from '@mui/material/Typography';
+import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
+import { Copyright } from '../../components/Copyright';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { useActions } from '../../hooks/useActions';
 import { useEffect } from 'react';
-import { Button, Card, CardContent, CardMedia, CircularProgress, Fab } from '@mui/material';
-import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
-import { Copyright } from "../../components/Copyright";
 
-export function MainPage() {
+export function StorePage() {
   const { loading, error, courses } = useTypedSelector((state) => state.courses);
-  const { getAllCourses, getUserInfo } = useActions();
+  const { getAllCourses } = useActions();
 
   useEffect(() => {
-    getUserInfo();
     getAllCourses();
-  }, [])
+  }, []);
 
   return (
     <Box
@@ -35,33 +30,17 @@ export function MainPage() {
       }}>
       <Toolbar />
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-        <Grid container spacing={3}>
-          {/* Прогресс бар */}
-          <Grid item xs={12} md={8} lg={9}>
-            <Paper
-              sx={{
-                p: 2,
-                display: 'flex',
-                flexDirection: 'column',
-                height: 240,
-              }}>
-              <LearningProgressWidget />
-            </Paper>
-          </Grid>
-          {/* Текущий курс */}
-          <Grid item xs={12} md={4} lg={3}>
-            <Paper
-              sx={{
-                p: 2,
-                display: 'flex',
-                flexDirection: 'column',
-                height: 240,
-              }}>
-              <CurrentCourseWidget />
-            </Paper>
-          </Grid>
+        <Grid item xs={12} sx={{ mt: 1, mb: 2 }}>
+          <Paper
+            sx={{
+              p: 2,
+              display: 'flex',
+              flexDirection: 'column',
+              height: 60,
+            }}>
+            <Title>Каталог курсов</Title>
+          </Paper>
         </Grid>
-        {/* Каталог курсов */}
         <Grid container spacing={4} sx={{ mt: 1, mb: 4 }}>
           {loading ? (
             <CircularProgress sx={{ m: 10 }} />

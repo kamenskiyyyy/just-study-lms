@@ -4,6 +4,8 @@ import { LoginPage } from './Auth/Login.page';
 import { MainPage } from './Main/Main.page';
 import { useTypedSelector } from '../hooks/useTypedSelector';
 import { RegisterPage } from './Auth/Register.page';
+import { StorePage } from './Store/Store.page';
+import { CoursePage } from './Course/Course.page';
 
 interface IRoute {
   path: string;
@@ -14,7 +16,9 @@ interface IRoute {
 export enum RouteNames {
   LOGIN = '/signin',
   REGISTER = '/signup',
-  MAIN = '/'
+  MAIN = '/',
+  STORE = '/store',
+  COURSE = '/course/:id',
 }
 
 export const publicRoutes: IRoute[] = [
@@ -24,18 +28,19 @@ export const publicRoutes: IRoute[] = [
 
 export const privateRoutes: IRoute[] = [
   { path: RouteNames.MAIN, exact: true, component: MainPage },
+  { path: RouteNames.STORE, exact: true, component: StorePage },
+  { path: RouteNames.COURSE, exact: false, component: CoursePage },
 ];
 
-
 export function RouterPages() {
-  const { isLogin } = useTypedSelector(state => state.auth);
+  const { isLogin } = useTypedSelector((state) => state.auth);
 
   if (isLogin) {
     return (
       <Switch>
-        {privateRoutes.map(route =>
-          <Route key={route.path} path={route.path} exact={route.exact} component={route.component} />,
-        )}
+        {privateRoutes.map((route) => (
+          <Route key={route.path} path={route.path} exact={route.exact} component={route.component} />
+        ))}
         <Redirect to={RouteNames.MAIN} />
       </Switch>
     );
@@ -43,9 +48,9 @@ export function RouterPages() {
 
   return (
     <Switch>
-      {publicRoutes.map(route =>
-        <Route key={route.path} path={route.path} exact={route.exact} component={route.component} />,
-      )}
+      {publicRoutes.map((route) => (
+        <Route key={route.path} path={route.path} exact={route.exact} component={route.component} />
+      ))}
       <Redirect to={RouteNames.LOGIN} />
     </Switch>
   );

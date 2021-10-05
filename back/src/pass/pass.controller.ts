@@ -25,7 +25,7 @@ export class PassController {
     return this.passService.getAllPass();
   }
 
-  @Get('user')
+  @Get()
   @UseGuards(AuthGuard)
   async getPassUser(@Query('id') userId: number): Promise<PassEntity[]> {
     return this.passService.getPassUser(userId);
