@@ -10,15 +10,28 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import HomeWorkIcon from '@mui/icons-material/HomeWork';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import HomeIcon from '@mui/icons-material/Home';
+import { Link } from 'react-router-dom';
+import { RouteNames } from '../pages/RouterPages';
 
 export const mainListItems = (
   <div>
-    <ListItem button>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Курсы" />
-    </ListItem>
+    <Link to={RouteNames.MAIN} style={{textDecoration: "none", color: "inherit"}}>
+      <ListItem button>
+        <ListItemIcon>
+          <HomeIcon />
+        </ListItemIcon>
+        <ListItemText primary="Главная" />
+      </ListItem>
+    </Link>
+    <Link to={RouteNames.STORE} style={{textDecoration: "none", color: "inherit"}}>
+      <ListItem button>
+        <ListItemIcon>
+          <ShoppingCartIcon />
+        </ListItemIcon>
+        <ListItemText primary="Курсы" />
+      </ListItem>
+    </Link>
     <ListItem button>
       <ListItemIcon>
         <DashboardIcon />
