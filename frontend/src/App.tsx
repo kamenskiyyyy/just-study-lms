@@ -16,9 +16,7 @@ export function App() {
   }, [isLogin]);
 
   if (!isLogin) {
-    return (
-        <RouterPages />
-    );
+    return <RouterPages />;
   }
 
   return (

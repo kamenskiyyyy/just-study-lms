@@ -1,6 +1,7 @@
 import Toolbar from '@mui/material/Toolbar';
-import Title from '../../components/Title';
+import Title from '../../../components/Title';
 import * as React from 'react';
+import { useEffect } from 'react';
 import {
   Box,
   Button,
@@ -14,12 +15,11 @@ import {
   Typography,
 } from '@mui/material';
 import { useHistory } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useActions } from '../../hooks/useActions';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
+import { useActions } from '../../../hooks/useActions';
+import { useTypedSelector } from '../../../hooks/useTypedSelector';
 
 export function CoursePage() {
-  const courseId = useHistory().location.pathname.replace(/^\/course\//, '');
+  const courseId = useHistory().location.pathname.replace(/^\/courses\//, '');
   const { loading, error, course } = useTypedSelector((state) => state.courses);
   const { getCurrentCourse } = useActions();
 
@@ -59,45 +59,43 @@ export function CoursePage() {
       <Toolbar />
       {course.map((item) => {
         return (
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Container sx={{ mt: 4, mb: 4 }}>
             <Grid item xs={12} sx={{ mt: 1, mb: 2 }}>
               <Paper
                 sx={{
                   p: 2,
                   display: 'flex',
                   flexDirection: 'column',
-                  height: 60,
+                  height: 6,
                 }}>
-                <Title>{item.title}</Title>
+                <Title>Курс: {item.title}</Title>
               </Paper>
             </Grid>
-            <Grid container spacing={4} sx={{ mt: 1, mb: 4 }}>
+            <Grid container spacing={2} sx={{ mt: 1, mb: 4 }}>
               {loading ? (
                 <CircularProgress sx={{ m: 10 }} />
               ) : (
                 item.lessons.map((lesson) => {
                   return (
-                    <Card sx={{ minWidth: 275 }} key={lesson.id}>
-                      <CardContent>
-                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                          Word of the Day
-                        </Typography>
-                        <Typography variant="h5" component="div">
-                          {lesson.title}
-                        </Typography>
-                        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                          adjective
-                        </Typography>
-                        <Typography variant="body2">
-                          well meaning and kindly.
-                          <br />
-                          {'"a benevolent smile"'}
-                        </Typography>
-                      </CardContent>
-                      <CardActions>
-                        <Button size="small">Learn More</Button>
-                      </CardActions>
-                    </Card>
+                    <Grid item xs={12} sm={6} md={4}>
+                      <Card key={lesson.id}>
+                        <CardContent>
+                          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                            Тема урока
+                          </Typography>
+                          <Typography variant="h5" component="div">
+                            {lesson.title}
+                          </Typography>
+                          <Typography sx={{ mb: 1.5, fontSize: 14 }} color="text.secondary">
+                            Статус: {lesson.watched ? 'Пройден' : lesson.block ? 'Заблокирован' : 'Доступен'}
+                          </Typography>
+                          <Typography variant="body2">{lesson.description}</Typography>
+                        </CardContent>
+                        <CardActions>
+                          <Button size="small">Открыть урок</Button>
+                        </CardActions>
+                      </Card>
+                    </Grid>
                   );
                 })
               )}

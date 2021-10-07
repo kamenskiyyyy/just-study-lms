@@ -1,39 +1,29 @@
 import { Dispatch } from 'redux';
-import { CourseAction, CourseActionTypes, ICourse } from "../reducers/courseReducer";
+import { CourseAction, CourseActionTypes, ICourse } from '../reducers/courseReducer';
 import { apiService } from '../../api';
 
 export const CourseActionCreators = {
   getAllCourses: () => async (dispatch: Dispatch<CourseAction>) => {
-    try {
-      dispatch({ type: CourseActionTypes.GET_INFO_COURSES });
-      const response = await apiService.get('/courses', true);
-      if (response) {
-        dispatch({ type: CourseActionTypes.GET_INFO_COURSES_ALL_SUCCESS, payload: response });
-      } else {
-        dispatch({ type: CourseActionTypes.GET_INFO_COURSES_ERROR, payload: `Произошла ошибка при загрузке курсов` });
-      }
-    } catch (e) {
-      dispatch({
-        type: CourseActionTypes.GET_INFO_COURSES_ERROR,
-        payload: `Произошла ошибка при загрузке курсов ${e}`,
+    dispatch({ type: CourseActionTypes.GET_INFO_COURSES });
+    await apiService
+      .get('/courses', true)
+      .then((res) => {
+        dispatch({ type: CourseActionTypes.GET_INFO_COURSES_ALL_SUCCESS, payload: res });
+      })
+      .catch((error) => {
+        dispatch({ type: CourseActionTypes.GET_INFO_COURSES_ERROR, payload: error });
       });
-    }
   },
   getCurrentCourse: (id: number) => async (dispatch: Dispatch<CourseAction>) => {
-    try {
-      dispatch({ type: CourseActionTypes.GET_INFO_COURSES });
-      const response = await apiService.get(`/courses/course?id=${id}`, true);
-      if (response) {
-        let data: ICourse[] = Array(response)
+    dispatch({ type: CourseActionTypes.GET_INFO_COURSES });
+    await apiService
+      .get(`/courses/course?id=${id}`, true)
+      .then((res) => {
+        let data: ICourse[] = Array(res);
         dispatch({ type: CourseActionTypes.GET_INFO_COURSE_SUCCESS, payload: data });
-      } else {
-        dispatch({ type: CourseActionTypes.GET_INFO_COURSES_ERROR, payload: `Произошла ошибка при загрузке курса` });
-      }
-    } catch (e) {
-      dispatch({
-        type: CourseActionTypes.GET_INFO_COURSES_ERROR,
-        payload: `Произошла ошибка при загрузке курса ${e}`,
+      })
+      .catch((error) => {
+        dispatch({ type: CourseActionTypes.GET_INFO_COURSES_ERROR, payload: error });
       });
-    }
   },
 };

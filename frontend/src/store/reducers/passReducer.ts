@@ -17,7 +17,7 @@ export interface IPass {
 interface IPassState {
   pass: IPass[];
   loading: boolean;
-  error: null | string;
+  error: null | Response;
 }
 
 export enum PassActionTypes {
@@ -37,7 +37,7 @@ interface IGetPassSuccessAction {
 
 interface IGetPassErrorAction {
   type: PassActionTypes.GET_INFO_PASS_ERROR;
-  payload: string;
+  payload: Response;
 }
 
 export type PassAction = IGetPassAction | IGetPassSuccessAction | IGetPassErrorAction;
