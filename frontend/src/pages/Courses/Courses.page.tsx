@@ -17,6 +17,7 @@ import { useEffect } from 'react';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { useActions } from '../../hooks/useActions';
 import { Link } from 'react-router-dom';
+import { PreloaderForPage } from '../../components/PreloaderForPage';
 
 export function CoursesPage() {
   const { loading, error, courses } = useTypedSelector((state) => state.courses);
@@ -27,22 +28,7 @@ export function CoursesPage() {
   }, []);
 
   if (loading) {
-    return (
-      <Box
-        component="main"
-        sx={{
-          backgroundColor: (theme) =>
-            theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
-          flexGrow: 1,
-          height: '100vh',
-          overflow: 'auto',
-        }}>
-        <Toolbar />
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-          <CircularProgress sx={{ m: 10 }} />
-        </Container>
-      </Box>
-    );
+    return <PreloaderForPage />;
   }
 
   return (
@@ -63,7 +49,6 @@ export function CoursesPage() {
               p: 2,
               display: 'flex',
               flexDirection: 'column',
-              height: 60,
             }}>
             <Title>Мои курсы</Title>
           </Paper>

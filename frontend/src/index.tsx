@@ -12,6 +12,8 @@ import ruLocale from 'date-fns/locale/ru';
 
 const theme = createTheme();
 
+export const baskEnd = 'http://localhost:8000';
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
@@ -24,5 +26,5 @@ ReactDOM.render(
       </Provider>
     </BrowserRouter>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );

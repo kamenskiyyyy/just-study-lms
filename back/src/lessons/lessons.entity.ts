@@ -52,6 +52,8 @@ export class LessonsEntity {
   @ManyToOne(() => CoursesEntity, (course) => course.lessons)
   course: CoursesEntity;
 
-  @OneToMany(() => HomeworkEntity, (homework) => homework.lesson, {eager: true})
+  @OneToMany(() => HomeworkEntity, (homework) => homework.lesson, {
+    eager: true,
+  })
   homeworks: HomeworkEntity[];
 }

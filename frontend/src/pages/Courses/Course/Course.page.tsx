@@ -14,9 +14,10 @@ import {
   Paper,
   Typography,
 } from '@mui/material';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useActions } from '../../../hooks/useActions';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
+import { PreloaderForPage } from '../../../components/PreloaderForPage';
 
 export function CoursePage() {
   const courseId = useHistory().location.pathname.replace(/^\/courses\//, '');
@@ -28,22 +29,7 @@ export function CoursePage() {
   }, [courseId]);
 
   if (loading) {
-    return (
-      <Box
-        component="main"
-        sx={{
-          backgroundColor: (theme) =>
-            theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
-          flexGrow: 1,
-          height: '100vh',
-          overflow: 'auto',
-        }}>
-        <Toolbar />
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-          <CircularProgress sx={{ m: 10 }} />
-        </Container>
-      </Box>
-    );
+    return <PreloaderForPage />;
   }
 
   return (
@@ -66,7 +52,6 @@ export function CoursePage() {
                   p: 2,
                   display: 'flex',
                   flexDirection: 'column',
-                  height: 6,
                 }}>
                 <Title>Курс: {item.title}</Title>
               </Paper>
@@ -92,7 +77,11 @@ export function CoursePage() {
                           <Typography variant="body2">{lesson.description}</Typography>
                         </CardContent>
                         <CardActions>
-                          <Button size="small">Открыть урок</Button>
+                          <Button size="small">
+                            <Link to={`/lessons/${lesson.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                              Открыть урок
+                            </Link>
+                          </Button>
                         </CardActions>
                       </Card>
                     </Grid>

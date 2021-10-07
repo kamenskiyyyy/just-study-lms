@@ -6,8 +6,8 @@ import {
   Post,
   Put,
   Query,
-  UseGuards
-} from "@nestjs/common";
+  UseGuards,
+} from '@nestjs/common';
 import { LessonsService } from './lessons.service';
 import { AuthGuard } from '../user/guards/auth.guard';
 import { LessonsEntity } from './lessons.entity';
@@ -20,10 +20,10 @@ import { ParamsLessonsDto } from './dto/paramsLessons.dto';
 export class LessonsController {
   constructor(private readonly lessonsService: LessonsService) {}
 
-  @Get()
+  @Get('lesson')
   @UseGuards(AuthGuard)
-  async getAllLessons(@Query('id') courseId: number): Promise<LessonsEntity[]> {
-    return this.lessonsService.getAllLessons(courseId);
+  async getLesson(@Query('id') id: number): Promise<LessonsEntity> {
+    return this.lessonsService.getLesson(id);
   }
 
   @Post()

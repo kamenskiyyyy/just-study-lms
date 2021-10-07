@@ -7,6 +7,7 @@ import { RegisterPage } from './Auth/Register.page';
 import { StorePage } from './Store/Store.page';
 import { CoursePage } from './Courses/Course/Course.page';
 import { CoursesPage } from './Courses/Courses.page';
+import { LessonPage } from './Lesson/Lesson.page';
 
 interface IRoute {
   path: string;
@@ -21,6 +22,7 @@ export enum RouteNames {
   STORE = '/store',
   COURSE = '/courses/:id',
   COURSES = '/courses',
+  LESSON = '/lessons/:id',
 }
 
 export const publicRoutes: IRoute[] = [
@@ -33,6 +35,7 @@ export const privateRoutes: IRoute[] = [
   { path: RouteNames.STORE, exact: false, component: StorePage },
   { path: RouteNames.COURSE, exact: true, component: CoursePage },
   { path: RouteNames.COURSES, exact: true, component: CoursesPage },
+  { path: RouteNames.LESSON, exact: true, component: LessonPage },
 ];
 
 export function RouterPages() {
