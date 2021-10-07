@@ -1,26 +1,26 @@
-import { IUserLogin } from "../../pages/Auth/Login.page";
+import { IUserLogin } from '../../pages/Auth/Login.page';
 
 interface IAuthState {
-  auth: any,
-  isLogin: boolean,
-  loading: boolean,
-  error: null | string
+  auth: any;
+  isLogin: boolean;
+  loading: boolean;
+  error: null | Response;
 }
 
 const initialState: IAuthState = {
   auth: [],
   isLogin: false,
   loading: false,
-  error: null
+  error: null,
 };
 
 export enum AuthActionTypes {
-  SET_AUTH = "SET_AUTH",
-  SET_USER = "SET_USER",
-  SET_IS_LOADING = "SET_IS_LOADING",
-  SET_AUTH_ERROR = "SET_AUTH_ERROR",
-  SET_AUTH_LOGOUT = "SET_AUTH_LOGOUT",
-  SET_AUTH_REGISTER = 'SET_AUTH_REGISTER'
+  SET_AUTH = 'SET_AUTH',
+  SET_USER = 'SET_USER',
+  SET_IS_LOADING = 'SET_IS_LOADING',
+  SET_AUTH_ERROR = 'SET_AUTH_ERROR',
+  SET_AUTH_LOGOUT = 'SET_AUTH_LOGOUT',
+  SET_AUTH_REGISTER = 'SET_AUTH_REGISTER',
 }
 
 export interface ISetAuthAction {
@@ -35,7 +35,7 @@ export interface ISetUserAction {
 
 export interface ISetAuthErrorAction {
   type: AuthActionTypes.SET_AUTH_ERROR;
-  payload: string;
+  payload: Response;
 }
 
 export interface ISetAuthLogoutAction {
@@ -53,7 +53,7 @@ export interface ISetAuthRegisterAction {
 }
 
 export type AuthAction =
-  ISetAuthAction
+  | ISetAuthAction
   | ISetUserAction
   | ISetAuthErrorAction
   | ISetAuthLogoutAction

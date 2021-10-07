@@ -1,11 +1,13 @@
 import React from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { LoginPage } from './Auth/Login.page';
 import { MainPage } from './Main/Main.page';
 import { useTypedSelector } from '../hooks/useTypedSelector';
 import { RegisterPage } from './Auth/Register.page';
 import { StorePage } from './Store/Store.page';
-import { CoursePage } from './Course/Course.page';
+import { CoursePage } from './Courses/Course/Course.page';
+import { CoursesPage } from './Courses/Courses.page';
+import { LessonPage } from './Lesson/Lesson.page';
 
 interface IRoute {
   path: string;
@@ -18,7 +20,9 @@ export enum RouteNames {
   REGISTER = '/signup',
   MAIN = '/',
   STORE = '/store',
-  COURSE = '/course/:id',
+  COURSE = '/courses/:id',
+  COURSES = '/courses',
+  LESSON = '/lessons/:id',
 }
 
 export const publicRoutes: IRoute[] = [
@@ -28,8 +32,10 @@ export const publicRoutes: IRoute[] = [
 
 export const privateRoutes: IRoute[] = [
   { path: RouteNames.MAIN, exact: true, component: MainPage },
-  { path: RouteNames.STORE, exact: true, component: StorePage },
-  { path: RouteNames.COURSE, exact: false, component: CoursePage },
+  { path: RouteNames.STORE, exact: false, component: StorePage },
+  { path: RouteNames.COURSE, exact: true, component: CoursePage },
+  { path: RouteNames.COURSES, exact: true, component: CoursesPage },
+  { path: RouteNames.LESSON, exact: true, component: LessonPage },
 ];
 
 export function RouterPages() {

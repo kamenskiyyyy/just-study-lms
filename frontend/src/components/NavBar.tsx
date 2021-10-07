@@ -145,12 +145,14 @@ export function NavBar() {
                 <ListItemText primary="Каталог" />
               </ListItem>
             </Link>
-            <ListItem button>
-              <ListItemIcon>
-                <DashboardIcon />
-              </ListItemIcon>
-              <ListItemText primary="Мои курсы" />
-            </ListItem>
+            <Link to={RouteNames.COURSES} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <ListItem button>
+                <ListItemIcon>
+                  <DashboardIcon />
+                </ListItemIcon>
+                <ListItemText primary="Мои курсы" />
+              </ListItem>
+            </Link>
             <ListItem button disabled={true}>
               <ListItemIcon>
                 <HomeWorkIcon />

@@ -1,4 +1,4 @@
-import { IRequest, queryToString, handleOriginalResponse, IApiService } from './base';
+import { handleOriginalResponse, IApiService, IRequest, queryToString } from './base';
 
 class ApiService {
   private baseUrl: string;
@@ -9,23 +9,23 @@ class ApiService {
     this.headers = options.headers;
   }
 
-  async get(path: string, auth?:boolean, query?: Record<string, string>) {
+  async get(path: string, auth?: boolean, query?: Record<string, string>) {
     return this.request({ path, query, method: 'GET', auth });
   }
 
-  post(path: string, data: Object, auth?:boolean, query?: Record<string, string>) {
+  post(path: string, data: Object, auth?: boolean, query?: Record<string, string>) {
     return this.request({ path, query, method: 'POST', body: data, auth });
   }
 
-  put(path: string, data: Object, auth?:boolean, query?: Record<string, string>) {
+  put(path: string, data: Object, auth?: boolean, query?: Record<string, string>) {
     return this.request({ path, query, method: 'PUT', body: data, auth });
   }
 
-  patch(path: string, data: Object, auth?:boolean, query?: Record<string, string>) {
+  patch(path: string, data: Object, auth?: boolean, query?: Record<string, string>) {
     return this.request({ path, query, method: 'PATCH', body: data, auth });
   }
 
-  delete(path: string, data: Object, auth?:boolean, query?: Record<string, string>) {
+  delete(path: string, data: Object, auth?: boolean, query?: Record<string, string>) {
     return this.request({ path, query, method: 'DELETE', body: data, auth });
   }
 
@@ -45,9 +45,7 @@ class ApiService {
       body: body,
     })
       .then(handleOriginalResponse)
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((data) => data);
   }
 
   private static contentDefault(headers: Headers, type: string, auth?: boolean): Headers {
@@ -55,7 +53,7 @@ class ApiService {
       headers.set('content-type', type);
     }
     if (auth) {
-      headers.set('Authorization', `Bearer ${<string>localStorage.getItem('jwt')}`)
+      headers.set('Authorization', `Bearer ${<string>localStorage.getItem('jwt')}`);
     }
     return headers;
   }

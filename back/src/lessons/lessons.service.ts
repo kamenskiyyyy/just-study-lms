@@ -14,9 +14,8 @@ export class LessonsService {
     private readonly courseService: CoursesService,
   ) {}
 
-  async getAllLessons(courseId: number): Promise<LessonsEntity[]> {
-    const course = await this.courseService.findById(courseId)
-    return await this.lessonsRepository.find({ where: { course } });
+  async getLesson(id: number): Promise<LessonsEntity> {
+    return await this.findById(id);
   }
 
   async createLesson(

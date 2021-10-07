@@ -14,7 +14,7 @@ export interface IUser {
 interface IUserState {
   user: IUser;
   loading: boolean;
-  error: null | string;
+  error: null | Response;
 }
 
 export enum UserActionTypes {
@@ -34,7 +34,7 @@ interface IGetUserSuccessAction {
 
 interface IGetUserErrorAction {
   type: UserActionTypes.GET_INFO_CURRENT_USER_ERROR;
-  payload: string;
+  payload: Response;
 }
 
 export type UserAction = IGetUserAction | IGetUserSuccessAction | IGetUserErrorAction;

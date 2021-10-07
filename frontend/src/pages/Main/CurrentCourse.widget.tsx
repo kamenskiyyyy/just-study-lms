@@ -1,9 +1,9 @@
 import * as React from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import Link from '@mui/material/Link';
 import { NavLink } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { Fragment, useEffect, useState } from 'react';
 import { useActions } from '../../hooks/useActions';
 import { formatDate } from '../../formatDate';
 import { TextField } from '@mui/material';
@@ -42,7 +42,7 @@ export default function CurrentCourseWidget() {
               от {formatDate(item.course.createdAt)}
             </Typography>
             <div>
-              <Link color="primary" to={`/course/${item.course.id}`} component={NavLink}>
+              <Link color="primary" to={`/courses/${item.course.id}`} component={NavLink}>
                 Перейти
               </Link>
             </div>

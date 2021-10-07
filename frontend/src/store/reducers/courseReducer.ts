@@ -1,4 +1,4 @@
-import { ILesson } from "./lessonReducer";
+import { ILesson } from './lessonReducer';
 
 export interface ICourse {
   id: number;
@@ -15,7 +15,7 @@ interface ICourseState {
   courses: ICourse[];
   course: ICourse[];
   loading: boolean;
-  error: null | string;
+  error: null | Response;
 }
 
 export enum CourseActionTypes {
@@ -41,7 +41,7 @@ interface IGetCourseSuccessAction {
 
 interface IGetCourseErrorAction {
   type: CourseActionTypes.GET_INFO_COURSES_ERROR;
-  payload: string;
+  payload: Response;
 }
 
 export type CourseAction =
