@@ -3,6 +3,7 @@ import { AuthActionCreators } from './auth';
 import { CourseActionCreators } from './course';
 import { PassActionCreators } from './pass';
 import { LessonActionCreators } from './lesson';
+import { HomeworkActionCreators } from './homework';
 
 export const allActionCreators = {
   ...AuthActionCreators,
@@ -10,4 +11,5 @@ export const allActionCreators = {
   ...CourseActionCreators,
   ...PassActionCreators,
   ...LessonActionCreators,
+  ...HomeworkActionCreators,
 };

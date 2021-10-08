@@ -8,6 +8,8 @@ import { StorePage } from './Store/Store.page';
 import { CoursePage } from './Courses/Course/Course.page';
 import { CoursesPage } from './Courses/Courses.page';
 import { LessonPage } from './Lesson/Lesson.page';
+import { HomeWorkPage } from './Homeworks/Homework/HomeWork.page';
+import { HomeWorksPage } from './Homeworks/HomeWorks.page';
 
 interface IRoute {
   path: string;
@@ -16,13 +18,15 @@ interface IRoute {
 }
 
 export enum RouteNames {
+  MAIN = '/',
   LOGIN = '/signin',
   REGISTER = '/signup',
-  MAIN = '/',
   STORE = '/store',
-  COURSE = '/courses/:id',
   COURSES = '/courses',
+  COURSE = '/courses/:id',
   LESSON = '/lessons/:id',
+  HOMEWORKS = '/homeworks',
+  HOMEWORK = '/homeworks/:id',
 }
 
 export const publicRoutes: IRoute[] = [
@@ -36,6 +40,8 @@ export const privateRoutes: IRoute[] = [
   { path: RouteNames.COURSE, exact: true, component: CoursePage },
   { path: RouteNames.COURSES, exact: true, component: CoursesPage },
   { path: RouteNames.LESSON, exact: true, component: LessonPage },
+  { path: RouteNames.HOMEWORK, exact: true, component: HomeWorkPage },
+  { path: RouteNames.HOMEWORKS, exact: true, component: HomeWorksPage },
 ];
 
 export function RouterPages() {

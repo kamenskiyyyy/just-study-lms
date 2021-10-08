@@ -1,3 +1,5 @@
+import { IHomework } from './homeworkReducer';
+
 export interface ILesson {
   id: number;
   title: string;
@@ -10,7 +12,7 @@ export interface ILesson {
   isPublished: boolean;
   createdAt: Date;
   updatedAt: Date;
-  homeworks: any[];
+  homeworks: IHomework[];
 }
 
 interface ILessonState {

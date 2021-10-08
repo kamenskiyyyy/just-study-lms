@@ -1,4 +1,8 @@
-import Toolbar from '@mui/material/Toolbar';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
+import { useActions } from '../../hooks/useActions';
+import * as React from 'react';
+import { useEffect } from 'react';
+import { PreloaderForPage } from '../../components/PreloaderForPage';
 import {
   Box,
   Button,
@@ -11,20 +15,16 @@ import {
   Paper,
   Typography,
 } from '@mui/material';
+import Toolbar from '@mui/material/Toolbar';
 import Title from '../../components/Title';
-import * as React from 'react';
-import { useEffect } from 'react';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { useActions } from '../../hooks/useActions';
 import { Link } from 'react-router-dom';
-import { PreloaderForPage } from '../../components/PreloaderForPage';
 
-export function CoursesPage() {
-  const { loading, error, courses } = useTypedSelector((state) => state.courses);
-  const { getAllCourses } = useActions();
+export function HomeWorksPage() {
+  const { loading, error, homeworks } = useTypedSelector((state) => state.homework);
+  const { getAllHomeworks } = useActions();
 
   useEffect(() => {
-    getAllCourses();
+    getAllHomeworks();
   }, []);
 
   if (loading) {
@@ -50,20 +50,20 @@ export function CoursesPage() {
               display: 'flex',
               flexDirection: 'column',
             }}>
-            <Title>Мои курсы</Title>
+            <Title>Мои домашние задания</Title>
           </Paper>
         </Grid>
         <Grid container spacing={2} sx={{ mt: 1, mb: 4 }}>
           {loading ? (
             <CircularProgress sx={{ m: 10 }} />
           ) : (
-            courses.map((item) => {
+            homeworks.map((item) => {
               return (
                 <Grid key={item.id} item xs={12}>
                   <Card>
                     <CardContent>
                       <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                        Название курса
+                        Название домашнего задания
                       </Typography>
                       <Typography variant="h5" component="div">
                         {item.title}
@@ -72,8 +72,8 @@ export function CoursesPage() {
                     </CardContent>
                     <CardActions>
                       <Button size="small">
-                        <Link to={`/courses/${item.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                          Открыть курс
+                        <Link to={`/homeworks/${item.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                          Открыть задание
                         </Link>
                       </Button>
                     </CardActions>

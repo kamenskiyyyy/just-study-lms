@@ -4,7 +4,7 @@ import { HomeworkEntity } from './homework.entity';
 import { DeleteResult, Repository } from 'typeorm';
 import { LessonsService } from '../lessons/lessons.service';
 import { CreateHomeworkDto } from './dto/createHomework.dto';
-import { ParamsHomeworkDto } from "./dto/paramsHomework.dto";
+import { ParamsHomeworkDto } from './dto/paramsHomework.dto';
 
 @Injectable()
 export class HomeworkService {
@@ -16,6 +16,10 @@ export class HomeworkService {
 
   async getAllHomeworks(): Promise<HomeworkEntity[]> {
     return await this.homeworkRepository.find();
+  }
+
+  async getCurrentHomework(id: number): Promise<HomeworkEntity> {
+    return await this.findById(id);
   }
 
   async createHomework(
@@ -46,7 +50,10 @@ export class HomeworkService {
     return await this.homeworkRepository.delete(homework);
   }
 
-  async editParamsHomework(homeworkId: number, paramsHomework: ParamsHomeworkDto): Promise<HomeworkEntity> {
+  async editParamsHomework(
+    homeworkId: number,
+    paramsHomework: ParamsHomeworkDto,
+  ): Promise<HomeworkEntity> {
     const homework = await this.findById(homeworkId);
     Object.assign(homework, paramsHomework);
     return await this.homeworkRepository.save(paramsHomework);
