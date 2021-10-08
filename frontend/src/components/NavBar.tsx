@@ -65,6 +65,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
     boxSizing: 'border-box',
     ...(!open && {
+      marginLeft: `-${drawerWidth}px`,
       overflowX: 'hidden',
       transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
@@ -153,12 +154,14 @@ export function NavBar() {
                 <ListItemText primary="Мои курсы" />
               </ListItem>
             </Link>
-            <ListItem button disabled={true}>
-              <ListItemIcon>
-                <HomeWorkIcon />
-              </ListItemIcon>
-              <ListItemText primary="Домашние задания" />
-            </ListItem>
+            <Link to={RouteNames.HOMEWORKS} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <ListItem button>
+                <ListItemIcon>
+                  <HomeWorkIcon />
+                </ListItemIcon>
+                <ListItemText primary="Домашние задания" />
+              </ListItem>
+            </Link>
             <ListItem button disabled={true}>
               <ListItemIcon>
                 <AutoStoriesIcon />
@@ -176,7 +179,7 @@ export function NavBar() {
         <Divider />
         <List>
           <div>
-            <ListSubheader inset>Персонализация</ListSubheader>
+            <ListSubheader inset>Личный кабинет</ListSubheader>
             <ListItem button>
               <ListItemIcon>
                 <AccountCircleIcon />

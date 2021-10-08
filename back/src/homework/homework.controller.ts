@@ -20,10 +20,22 @@ import { ParamsHomeworkDto } from './dto/paramsHomework.dto';
 export class HomeworkController {
   constructor(private readonly homeworkService: HomeworkService) {}
 
-  @Get()
+  @Get('all')
   @UseGuards(AuthGuard)
   async getAllHomeworks(): Promise<HomeworkEntity[]> {
     return this.homeworkService.getAllHomeworks();
+  }
+
+  // @Get()
+  // @UseGuards(AuthGuard)
+  // async getAllHomeworksForUser(@Query('user-id') id: number): Promise<HomeworkEntity> {
+  //   return this.homeworkService.getCurrentHomework(id);
+  // }
+
+  @Get('homework')
+  @UseGuards(AuthGuard)
+  async getCurrentHomeworks(@Query('id') id: number): Promise<HomeworkEntity> {
+    return this.homeworkService.getCurrentHomework(id);
   }
 
   @Post()

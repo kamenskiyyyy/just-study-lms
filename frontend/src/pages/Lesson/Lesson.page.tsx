@@ -1,10 +1,10 @@
 import Toolbar from '@mui/material/Toolbar';
-import { Box, Container, Grid, Paper, Typography } from '@mui/material';
+import { Box, Button, Container, Grid, Paper, Typography } from '@mui/material';
 import Title from '../../components/Title';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { PreloaderForPage } from '../../components/PreloaderForPage';
 import { useActions } from '../../hooks/useActions';
 import ReactPlayer from 'react-player/lazy';
@@ -36,7 +36,7 @@ export function LessonPage() {
       <Toolbar />
       {lesson.map((item) => {
         return (
-          <Container sx={{ mt: 4, mb: 4 }}>
+          <Container key={item.id} sx={{ mt: 4, mb: 4, display: 'flex', flexDirection: 'column' }}>
             <Grid item xs={12} sx={{ mt: 1, mb: 2 }}>
               <Paper
                 sx={{
@@ -48,42 +48,37 @@ export function LessonPage() {
                 <Typography variant="body1">{item.description}</Typography>
               </Paper>
             </Grid>
-            <Grid container spacing={2} sx={{ mt: 1, mb: 4 }}>
+            <Grid item xs={12} sx={{ mt: 1, mb: 4, justifyContent: 'center' }}>
               {item.file.map((fileItem) => {
-                return <ReactPlayer url={`${baskEnd}${fileItem}`} controls={true} light={true} />;
+                return (
+                  <Paper
+                    key={fileItem}
+                    sx={{
+                      p: 2,
+                      display: 'flex',
+                      flexDirection: 'column',
+                    }}>
+                    <ReactPlayer url={`${baskEnd}${fileItem}`} controls={true} light={true} width="100%" />
+                  </Paper>
+                );
               })}
-              {/*{loading ? (*/}
-              {/*  <CircularProgress sx={{ m: 10 }} />*/}
-              {/*) : (*/}
-              {/*  item.lessons.map((lesson) => {*/}
-              {/*    return (*/}
-              {/*      <Grid item xs={12} sm={6} md={4}>*/}
-              {/*        <Card key={lesson.id}>*/}
-              {/*          <CardContent>*/}
-              {/*            <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>*/}
-              {/*              Тема урока*/}
-              {/*            </Typography>*/}
-              {/*            <Typography variant="h5" component="div">*/}
-              {/*              {lesson.title}*/}
-              {/*            </Typography>*/}
-              {/*            <Typography sx={{ mb: 1.5, fontSize: 14 }} color="text.secondary">*/}
-              {/*              Статус: {lesson.watched ? 'Пройден' : lesson.block ? 'Заблокирован' : 'Доступен'}*/}
-              {/*            </Typography>*/}
-              {/*            <Typography variant="body2">{lesson.description}</Typography>*/}
-              {/*          </CardContent>*/}
-              {/*          <CardActions>*/}
-              {/*            <Button size="small">*/}
-              {/*              <Link to={`/lessons/${item.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>*/}
-              {/*                Открыть урок*/}
-              {/*              </Link>*/}
-              {/*            </Button>*/}
-              {/*          </CardActions>*/}
-              {/*        </Card>*/}
-              {/*      </Grid>*/}
-              {/*    );*/}
-              {/*  })*/}
-              {/*)}*/}
             </Grid>
+            <Grid item xs={12} sx={{ mt: 1, mb: 4, justifyContent: 'center' }}>
+              <Paper
+                sx={{
+                  p: 2,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  width: '100%',
+                }}>
+                <div dangerouslySetInnerHTML={{ __html: item.body }} />
+              </Paper>
+            </Grid>
+            <Button variant="outlined">
+              <Link to={'/homeworks/'} style={{ textDecoration: 'none', color: 'inherit' }}>
+                Перейти к домашнему заданию
+              </Link>
+            </Button>
           </Container>
         );
       })}
