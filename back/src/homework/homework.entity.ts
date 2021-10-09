@@ -19,7 +19,10 @@ export class HomeworkEntity {
   done: boolean;
 
   @Column()
-  body: string;
+  type: string;
+
+  @Column('json', { default: [], nullable: false })
+  body: Array<{}>;
 
   @Column({ default: false })
   watched: boolean;

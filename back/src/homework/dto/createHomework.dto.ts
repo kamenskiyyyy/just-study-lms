@@ -1,4 +1,10 @@
-import { IsBoolean, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import {
+  IsArray,
+  IsBoolean,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CreateHomeworkDto {
   @IsNotEmpty()
@@ -19,7 +25,11 @@ export class CreateHomeworkDto {
 
   @IsNotEmpty()
   @IsString()
-  body: string;
+  type: string;
+
+  @IsNotEmpty()
+  @IsArray()
+  body: [];
 
   @IsOptional()
   @IsBoolean()

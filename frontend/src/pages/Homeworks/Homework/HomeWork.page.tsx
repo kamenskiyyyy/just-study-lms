@@ -7,7 +7,9 @@ import { useEffect } from 'react';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import { useActions } from '../../../hooks/useActions';
 import { PreloaderForPage } from '../../../components/PreloaderForPage';
-import { ChoiceFromList, IChoiceFromList } from '../../../components/Questions/ChoiceFromList';
+import { ChoiceFromList } from '../../../components/Questions/ChoiceFromList/ChoiceFromList';
+import { WriteWord } from '../../../components/Questions/WriteWord/WriteWord';
+import { IWriteWordItem } from '../../../components/Questions/WriteWord/WriteWordItem';
 
 export function HomeWorkPage() {
   const homeworkId = useHistory().location.pathname.replace(/^\/homeworks\//, '');
@@ -22,26 +24,18 @@ export function HomeWorkPage() {
     return <PreloaderForPage />;
   }
 
-  const typeChangeWords: IChoiceFromList[] = [
+  const typeWriteWord: IWriteWordItem[] = [
     {
       id: 1,
       before: 'The man eat',
-      after: 'on the street.',
-      answers: [
-        { isCorrect: true, answer: 'fruits' },
-        { isCorrect: false, answer: 'snacks' },
-        { isCorrect: false, answer: 'fast food' },
-      ],
+      after: 'on the street. (глагол eat)',
+      answers: ['street food', 'fast food'],
     },
     {
       id: 2,
       before: 'The woman go to',
       after: 'with boyfriend.',
-      answers: [
-        { isCorrect: true, answer: 'the cinema' },
-        { isCorrect: false, answer: 'a mac' },
-        { isCorrect: false, answer: 'do kfc' },
-      ],
+      answers: ['the mac'],
     },
   ];
 
@@ -78,18 +72,21 @@ export function HomeWorkPage() {
                   flexDirection: 'column',
                   width: '100%',
                 }}>
-                {typeChangeWords.map((item) => {
-                  return (
-                    <ChoiceFromList
-                      key={item.id}
-                      id={item.id}
-                      before={item.before}
-                      after={item.after}
-                      answers={item.answers}
-                    />
-                  );
-                })}
+                {/*// @ts-ignore*/}
+                {item.type === 'choiceFromList' && <ChoiceFromList typeChangeWords={item.body} />}
+                {/*// @ts-ignore*/}
               </Paper>
+              <Grid item xs={12} sx={{ mt: 1, mb: 4, justifyContent: 'center' }}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    width: '100%',
+                  }}>
+                  <WriteWord typeWriteWord={typeWriteWord} />
+                </Paper>
+              </Grid>
             </Grid>
           </Container>
         );
