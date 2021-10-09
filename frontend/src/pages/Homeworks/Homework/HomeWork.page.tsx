@@ -8,6 +8,8 @@ import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import { useActions } from '../../../hooks/useActions';
 import { PreloaderForPage } from '../../../components/PreloaderForPage';
 import { ChoiceFromList } from '../../../components/Questions/ChoiceFromList/ChoiceFromList';
+import { WriteWord } from '../../../components/Questions/WriteWord/WriteWord';
+import { IWriteWordItem } from '../../../components/Questions/WriteWord/WriteWordItem';
 
 export function HomeWorkPage() {
   const homeworkId = useHistory().location.pathname.replace(/^\/homeworks\//, '');
@@ -21,6 +23,21 @@ export function HomeWorkPage() {
   if (loading) {
     return <PreloaderForPage />;
   }
+
+  const typeWriteWord: IWriteWordItem[] = [
+    {
+      id: 1,
+      before: 'The man eat',
+      after: 'on the street. (глагол eat)',
+      answers: ['street food', 'fast food'],
+    },
+    {
+      id: 2,
+      before: 'The woman go to',
+      after: 'with boyfriend.',
+      answers: ['the mac'],
+    },
+  ];
 
   return (
     <Box
@@ -57,7 +74,19 @@ export function HomeWorkPage() {
                 }}>
                 {/*// @ts-ignore*/}
                 {item.type === 'choiceFromList' && <ChoiceFromList typeChangeWords={item.body} />}
+                {/*// @ts-ignore*/}
               </Paper>
+              <Grid item xs={12} sx={{ mt: 1, mb: 4, justifyContent: 'center' }}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    width: '100%',
+                  }}>
+                  <WriteWord typeWriteWord={typeWriteWord} />
+                </Paper>
+              </Grid>
             </Grid>
           </Container>
         );

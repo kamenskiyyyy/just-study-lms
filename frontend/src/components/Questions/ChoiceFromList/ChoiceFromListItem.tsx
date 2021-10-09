@@ -19,11 +19,14 @@ export function ChoiceFromListItem({ id, before, answers, after, handleChange }:
     <Typography variant="body1" display="flex" alignItems="center" sx={{ mt: 1, mb: 1 }}>
       {id}. {before}
       <FormControl sx={{ mr: 2, ml: 2 }}>
-        <InputLabel id="demo-simple-select-label">Выберите</InputLabel>
+        <InputLabel sx={{ mt: -1 }} id={id.toString()}>
+          Выберите
+        </InputLabel>
         <Select
+          size="small"
           sx={{ minWidth: 150 }}
           autoWidth={true}
-          labelId="demo-simple-select-label"
+          labelId={id.toString()}
           id={id.toString()}
           name={id.toString()}
           label="Выберите"
