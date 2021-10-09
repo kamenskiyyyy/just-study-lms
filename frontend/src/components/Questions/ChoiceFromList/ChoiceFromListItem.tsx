@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import * as React from 'react';
 
 export interface IChoiceFromList {
@@ -6,6 +6,7 @@ export interface IChoiceFromList {
   before: string;
   after: string;
   answers: IAnswers[];
+  handleChange?: any;
 }
 
 interface IAnswers {
@@ -13,13 +14,7 @@ interface IAnswers {
   answer: string;
 }
 
-export function ChoiceFromList({ id, before, answers, after }: IChoiceFromList) {
-  const [value, setValue] = React.useState('');
-
-  const handleChange = (event: SelectChangeEvent) => {
-    setValue(event.target.value as string);
-  };
-
+export function ChoiceFromListItem({ id, before, answers, after, handleChange }: IChoiceFromList) {
   return (
     <Typography variant="body1" display="flex" alignItems="center" sx={{ mt: 1, mb: 1 }}>
       {id}. {before}
@@ -29,12 +24,12 @@ export function ChoiceFromList({ id, before, answers, after }: IChoiceFromList) 
           sx={{ minWidth: 150 }}
           autoWidth={true}
           labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={value}
+          id={id.toString()}
+          name={id.toString()}
           label="Выберите"
           onChange={handleChange}>
           {answers.map((answer) => {
-            return <MenuItem value={answer.isCorrect ? 10 : 0}>{answer.answer}</MenuItem>;
+            return <MenuItem value={answer.isCorrect ? 1 : 0}>{answer.answer}</MenuItem>;
           })}
         </Select>
       </FormControl>

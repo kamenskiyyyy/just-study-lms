@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import { useActions } from '../../../hooks/useActions';
 import { PreloaderForPage } from '../../../components/PreloaderForPage';
-import { ChoiceFromList, IChoiceFromList } from '../../../components/Questions/ChoiceFromList';
+import { ChoiceFromList } from '../../../components/Questions/ChoiceFromList/ChoiceFromList';
 
 export function HomeWorkPage() {
   const homeworkId = useHistory().location.pathname.replace(/^\/homeworks\//, '');
@@ -21,29 +21,6 @@ export function HomeWorkPage() {
   if (loading) {
     return <PreloaderForPage />;
   }
-
-  const typeChangeWords: IChoiceFromList[] = [
-    {
-      id: 1,
-      before: 'The man eat',
-      after: 'on the street.',
-      answers: [
-        { isCorrect: true, answer: 'fruits' },
-        { isCorrect: false, answer: 'snacks' },
-        { isCorrect: false, answer: 'fast food' },
-      ],
-    },
-    {
-      id: 2,
-      before: 'The woman go to',
-      after: 'with boyfriend.',
-      answers: [
-        { isCorrect: true, answer: 'the cinema' },
-        { isCorrect: false, answer: 'a mac' },
-        { isCorrect: false, answer: 'do kfc' },
-      ],
-    },
-  ];
 
   return (
     <Box
@@ -78,17 +55,8 @@ export function HomeWorkPage() {
                   flexDirection: 'column',
                   width: '100%',
                 }}>
-                {typeChangeWords.map((item) => {
-                  return (
-                    <ChoiceFromList
-                      key={item.id}
-                      id={item.id}
-                      before={item.before}
-                      after={item.after}
-                      answers={item.answers}
-                    />
-                  );
-                })}
+                {/*// @ts-ignore*/}
+                {item.type === 'choiceFromList' && <ChoiceFromList typeChangeWords={item.body} />}
               </Paper>
             </Grid>
           </Container>

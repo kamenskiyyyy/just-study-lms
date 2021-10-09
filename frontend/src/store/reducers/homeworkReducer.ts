@@ -3,6 +3,7 @@ export interface IHomework {
   title: string;
   description: string;
   prompt: string;
+  type: 'choiceFromList';
   done: boolean;
   body: string;
   watched: boolean;
