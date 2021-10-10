@@ -47,7 +47,7 @@ export function WriteWordItem({
   }
 
   return (
-    <Box display="flex" alignItems="center" sx={{ mt: 1, mb: 1 }}>
+    <Box display="flex" alignItems="center" flexWrap="wrap" sx={{ mt: 1, mb: 1 }}>
       <Typography variant="body1">
         {id}. {before}{' '}
       </Typography>
@@ -60,7 +60,7 @@ export function WriteWordItem({
           name={id.toString()}
           value={value}
           size="small"
-          sx={{ minWidth: 150 }}
+          // sx={{ minWidth: 150 }}
           label="Впишите слово"
           onChange={choiceHandler}
           variant="outlined"

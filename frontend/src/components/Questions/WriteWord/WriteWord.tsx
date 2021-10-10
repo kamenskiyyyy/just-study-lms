@@ -12,7 +12,6 @@ export function WriteWord({ typeWriteWord }: IWriteWordComponent) {
   const [checkMode, setCheckMode] = useState<boolean>(false);
 
   function handleApprove() {
-    // @ts-ignore
     setCheckMode(true);
     console.log(typeWriteWord);
   }

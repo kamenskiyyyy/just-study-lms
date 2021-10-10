@@ -59,6 +59,7 @@ export function HomeWorkPage() {
 
   useEffect(() => {
     console.log(typeChangeWords);
+    console.log(JSON.stringify(typeChangeWords));
   }, [typeChangeWords]);
 
   if (loading) {
@@ -99,7 +100,7 @@ export function HomeWorkPage() {
                   width: '100%',
                 }}>
                 {/*// @ts-ignore*/}
-                {item.type === 'choiceFromList' && <ChoiceFromList typeChangeWords={typeChangeWords} />}
+                {item.type === 'choiceFromList' && <ChoiceFromList typeChangeWords={item.body} />}
                 {/*// @ts-ignore*/}
               </Paper>
               <Grid item xs={12} sx={{ mt: 1, mb: 4, justifyContent: 'center' }}>

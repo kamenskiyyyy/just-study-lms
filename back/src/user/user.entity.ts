@@ -1,13 +1,15 @@
 import {
   BeforeInsert,
   Column,
-  Entity, OneToMany,
-  PrimaryGeneratedColumn
-} from "typeorm";
-import { hash } from "bcryptjs";
-import { PassEntity } from "../pass/pass.entity";
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { hash } from 'bcryptjs';
+import { PassEntity } from '../pass/pass.entity';
+import { TasksEntity } from '../tasks/tasks.entity';
 
-@Entity({ name: "users" })
+@Entity({ name: 'users' })
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -18,8 +20,8 @@ export class UserEntity {
   @Column({ select: false })
   password: string;
 
-  @Column({ default: "user" })
-  type: "admin" | "user" | "teacher" | "manager";
+  @Column({ default: 'user' })
+  type: 'admin' | 'user' | 'teacher' | 'manager';
 
   @Column({ default: null })
   firstName: string;
@@ -30,7 +32,7 @@ export class UserEntity {
   @Column()
   birthDate: Date;
 
-  @Column("bigint", { default: null })
+  @Column('bigint', { default: null })
   phone: number;
 
   @Column({ default: null })
@@ -46,4 +48,7 @@ export class UserEntity {
 
   @OneToMany(() => PassEntity, (course) => course.owner)
   usersToCourses: PassEntity[];
+
+  @OneToMany(() => TasksEntity, (task) => task.student)
+  usersToTasks: TasksEntity[];
 }

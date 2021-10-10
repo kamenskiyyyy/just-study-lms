@@ -60,7 +60,7 @@ export function ChoiceFromListItem({
   }
 
   return (
-    <Box display="flex" alignItems="center" sx={{ mt: 1, mb: 1 }}>
+    <Box display="flex" alignItems="center" flexWrap="wrap" sx={{ mt: 1, mb: 1 }}>
       <Typography variant="body1">
         {id}. {before}
       </Typography>

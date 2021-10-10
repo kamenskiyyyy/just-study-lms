@@ -21,7 +21,7 @@ export function ChoiceFromList({ typeChangeWords }: IChoiceFromListComponent) {
     // } else {
     //   setSolution({ message: `К сожалению вы ответили правильно на ${sum} вопросов из ${right}`, isCorrect: false });
     // }
-    setCheckMode(!checkMode);
+    setCheckMode(true);
     console.log(typeChangeWords);
   }
 
