@@ -6,28 +6,24 @@ import {
   IsString,
 } from 'class-validator';
 
-export class CreateHomeworkDto {
-  @IsNotEmpty()
-  @IsString()
-  title: string;
+export class CreateTaskDto {
+  @IsOptional()
+  @IsBoolean()
+  watched: boolean;
 
   @IsOptional()
-  @IsString()
-  description: string;
+  @IsBoolean()
+  block: boolean;
 
   @IsOptional()
-  @IsString()
-  prompt: string;
+  @IsBoolean()
+  isPublished: boolean;
 
   @IsNotEmpty()
   @IsString()
   type: 'choiceFromList' | 'writeWord';
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsArray()
   body: [];
-
-  @IsOptional()
-  @IsBoolean()
-  isPublished: boolean;
 }

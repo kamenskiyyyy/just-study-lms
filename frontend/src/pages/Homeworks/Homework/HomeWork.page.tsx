@@ -9,7 +9,44 @@ import { useActions } from '../../../hooks/useActions';
 import { PreloaderForPage } from '../../../components/PreloaderForPage';
 import { ChoiceFromList } from '../../../components/Questions/ChoiceFromList/ChoiceFromList';
 import { WriteWord } from '../../../components/Questions/WriteWord/WriteWord';
-import { IWriteWordItem } from '../../../components/Questions/WriteWord/WriteWordItem';
+import { ITypeChoiceFromList } from '../../../components/Questions/ChoiceFromList/ChoiceFromListItem';
+import { ITypeWriteWord } from '../../../components/Questions/WriteWord/WriteWordItem';
+
+const typeChangeWords: ITypeChoiceFromList[] = [
+  {
+    id: 1,
+    before: 'The man eat',
+    after: 'on the street.',
+    isCorrect: false,
+    correctAnswers: ['fruits'],
+    answers: ['fruits', 'snacks', 'fast food'],
+  },
+  {
+    id: 2,
+    before: 'The woman go to',
+    after: 'with boyfriend.',
+    isCorrect: false,
+    correctAnswers: ['the cinema'],
+    answers: ['the cinema', 'a mac', 'do kfc'],
+  },
+];
+
+const typeWriteWord: ITypeWriteWord[] = [
+  {
+    id: 1,
+    before: 'The man eat',
+    after: 'on the street. (глагол eat)',
+    correctAnswers: ['street food', 'fast food'],
+    isCorrect: false,
+  },
+  {
+    id: 2,
+    before: 'The woman go to',
+    after: 'with boyfriend.',
+    correctAnswers: ['the mac'],
+    isCorrect: false,
+  },
+];
 
 export function HomeWorkPage() {
   const homeworkId = useHistory().location.pathname.replace(/^\/homeworks\//, '');
@@ -20,24 +57,14 @@ export function HomeWorkPage() {
     getCurrentHomework(+homeworkId);
   }, []);
 
+  useEffect(() => {
+    console.log(typeChangeWords);
+    console.log(JSON.stringify(typeChangeWords));
+  }, [typeChangeWords]);
+
   if (loading) {
     return <PreloaderForPage />;
   }
-
-  const typeWriteWord: IWriteWordItem[] = [
-    {
-      id: 1,
-      before: 'The man eat',
-      after: 'on the street. (глагол eat)',
-      answers: ['street food', 'fast food'],
-    },
-    {
-      id: 2,
-      before: 'The woman go to',
-      after: 'with boyfriend.',
-      answers: ['the mac'],
-    },
-  ];
 
   return (
     <Box
@@ -84,6 +111,7 @@ export function HomeWorkPage() {
                     flexDirection: 'column',
                     width: '100%',
                   }}>
+                  {/*// @ts-ignore*/}
                   <WriteWord typeWriteWord={typeWriteWord} />
                 </Paper>
               </Grid>

@@ -9,6 +9,7 @@ import { CoursesModule } from './courses/courses.module';
 import { PassModule } from './pass/pass.module';
 import { LessonsModule } from './lessons/lessons.module';
 import { HomeworkModule } from './homework/homework.module';
+import { TasksModule } from './tasks/tasks.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { HomeworkModule } from './homework/homework.module';
     PassModule,
     LessonsModule,
     HomeworkModule,
+    TasksModule,
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService],
