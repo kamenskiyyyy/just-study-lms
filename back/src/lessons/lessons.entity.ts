@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { CoursesEntity } from '../courses/courses.entity';
 import { HomeworkEntity } from '../homework/homework.entity';
+import { AssignmentEntity } from '../assignment/assignment.entity';
 
 @Entity('lessons')
 export class LessonsEntity {
@@ -29,12 +30,6 @@ export class LessonsEntity {
   @Column()
   body: string;
 
-  @Column({ default: false })
-  watched: boolean;
-
-  @Column({ default: false })
-  block: boolean;
-
   @Column({ default: true })
   isPublished: boolean;
 
@@ -51,6 +46,11 @@ export class LessonsEntity {
 
   @ManyToOne(() => CoursesEntity, (course) => course.lessons)
   course: CoursesEntity;
+
+  @ManyToOne(() => AssignmentEntity, (assignment) => assignment.lesson, {
+    eager: true,
+  })
+  assignments: AssignmentEntity;
 
   @OneToMany(() => HomeworkEntity, (homework) => homework.lesson, {
     eager: true,

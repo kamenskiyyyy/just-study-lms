@@ -8,6 +8,7 @@ import {
 import { hash } from 'bcryptjs';
 import { PassEntity } from '../pass/pass.entity';
 import { TasksEntity } from '../tasks/tasks.entity';
+import { AssignmentEntity } from '../assignment/assignment.entity';
 
 @Entity({ name: 'users' })
 export class UserEntity {
@@ -51,4 +52,7 @@ export class UserEntity {
 
   @OneToMany(() => TasksEntity, (task) => task.student)
   usersToTasks: TasksEntity[];
+
+  @OneToMany(() => AssignmentEntity, (assignment) => assignment.student)
+  usersToAssignment: AssignmentEntity[];
 }
