@@ -1,7 +1,7 @@
 import Title from '../../Title';
 import { Button } from '@mui/material';
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { IWriteWordItem, WriteWordItem } from './WriteWordItem';
 
 interface IWriteWordComponent {
@@ -11,13 +11,9 @@ interface IWriteWordComponent {
 export function WriteWord({ typeWriteWord }: IWriteWordComponent) {
   const [checkMode, setCheckMode] = useState<boolean>(false);
 
-  useEffect(() => {
-    console.log(checkMode);
-  }, [checkMode]);
-
   function handleApprove() {
     // @ts-ignore
-    setCheckMode(!checkMode);
+    setCheckMode(true);
     console.log(typeWriteWord);
   }
 

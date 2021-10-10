@@ -9,15 +9,27 @@ import { useActions } from '../../../hooks/useActions';
 import { PreloaderForPage } from '../../../components/PreloaderForPage';
 import { ChoiceFromList } from '../../../components/Questions/ChoiceFromList/ChoiceFromList';
 import { WriteWord } from '../../../components/Questions/WriteWord/WriteWord';
+import { ITypeChoiceFromList } from '../../../components/Questions/ChoiceFromList/ChoiceFromListItem';
+import { ITypeWriteWord } from '../../../components/Questions/WriteWord/WriteWordItem';
 
-export interface ITypeWriteWord {
-  id: number;
-  before: string;
-  after: string;
-  correctAnswers: string[];
-  userAnswer?: string;
-  isCorrect: boolean;
-}
+const typeChangeWords: ITypeChoiceFromList[] = [
+  {
+    id: 1,
+    before: 'The man eat',
+    after: 'on the street.',
+    isCorrect: false,
+    correctAnswers: ['fruits'],
+    answers: ['fruits', 'snacks', 'fast food'],
+  },
+  {
+    id: 2,
+    before: 'The woman go to',
+    after: 'with boyfriend.',
+    isCorrect: false,
+    correctAnswers: ['the cinema'],
+    answers: ['the cinema', 'a mac', 'do kfc'],
+  },
+];
 
 const typeWriteWord: ITypeWriteWord[] = [
   {
@@ -25,7 +37,6 @@ const typeWriteWord: ITypeWriteWord[] = [
     before: 'The man eat',
     after: 'on the street. (глагол eat)',
     correctAnswers: ['street food', 'fast food'],
-    userAnswer: '',
     isCorrect: false,
   },
   {
@@ -33,7 +44,6 @@ const typeWriteWord: ITypeWriteWord[] = [
     before: 'The woman go to',
     after: 'with boyfriend.',
     correctAnswers: ['the mac'],
-    userAnswer: '',
     isCorrect: false,
   },
 ];
@@ -48,8 +58,8 @@ export function HomeWorkPage() {
   }, []);
 
   useEffect(() => {
-    console.log(typeWriteWord);
-  }, [typeWriteWord]);
+    console.log(typeChangeWords);
+  }, [typeChangeWords]);
 
   if (loading) {
     return <PreloaderForPage />;
@@ -89,7 +99,7 @@ export function HomeWorkPage() {
                   width: '100%',
                 }}>
                 {/*// @ts-ignore*/}
-                {item.type === 'choiceFromList' && <ChoiceFromList typeChangeWords={item.body} />}
+                {item.type === 'choiceFromList' && <ChoiceFromList typeChangeWords={typeChangeWords} />}
                 {/*// @ts-ignore*/}
               </Paper>
               <Grid item xs={12} sx={{ mt: 1, mb: 4, justifyContent: 'center' }}>

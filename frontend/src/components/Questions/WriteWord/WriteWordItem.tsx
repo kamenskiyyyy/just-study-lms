@@ -1,7 +1,6 @@
-import { FormControl, TextField, Typography } from '@mui/material';
+import { Box, FormControl, TextField, Typography } from '@mui/material';
 import * as React from 'react';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { ITypeWriteWord } from '../../../pages/Homeworks/Homework/HomeWork.page';
 
 export interface IWriteWordItem {
   id: number;
@@ -15,6 +14,15 @@ export interface IWriteWordItem {
   typeWriteWord: ITypeWriteWord[];
 }
 
+export interface ITypeWriteWord {
+  id: number;
+  before: string;
+  after: string;
+  correctAnswers: string[];
+  userAnswer?: string;
+  isCorrect: boolean;
+}
+
 export function WriteWordItem({
   id,
   before,
@@ -24,28 +32,25 @@ export function WriteWordItem({
   isCorrect,
   typeWriteWord,
 }: IWriteWordItem) {
-  const block = typeWriteWord.find((item) => item.id === id);
   // @ts-ignore
-  const [value, setValue] = useState<string>(block.userAnswer);
+  const task: ITypeWriteWord = typeWriteWord.find((item) => item.id === id);
+  const [value, setValue] = useState<string>(task.userAnswer || '');
 
   useEffect(() => {
-    console.log(checkMode);
-  }, [checkMode]);
-
-  useEffect(() => {
-    // @ts-ignore
-    block.isCorrect = correctAnswers.includes(value as string);
+    task.isCorrect = correctAnswers.includes(value.trim() as string);
   }, [value]);
 
   function choiceHandler(e: ChangeEvent<HTMLInputElement>) {
-    setValue(e.target.value.toString().toLowerCase().trim());
-    // @ts-ignore
-    block.userAnswer = e.target.value.toString().toLowerCase().trim();
+    const answer = e.target.value.toString().toLowerCase();
+    setValue(answer);
+    task.userAnswer = answer;
   }
 
   return (
-    <Typography variant="body1" display="flex" alignItems="center" sx={{ mt: 1, mb: 1 }}>
-      {id}. {before}
+    <Box display="flex" alignItems="center" sx={{ mt: 1, mb: 1 }}>
+      <Typography variant="body1">
+        {id}. {before}{' '}
+      </Typography>
       <FormControl sx={{ mr: 2, ml: 2 }}>
         <TextField
           autoComplete="off"
@@ -53,6 +58,7 @@ export function WriteWordItem({
           error={checkMode && !isCorrect}
           id={id.toString()}
           name={id.toString()}
+          value={value}
           size="small"
           sx={{ minWidth: 150 }}
           label="Впишите слово"
@@ -61,7 +67,7 @@ export function WriteWordItem({
           helperText={checkMode && !isCorrect && 'Неправильный ответ'}
         />
       </FormControl>
-      {after}
-    </Typography>
+      <Typography variant="body1">{after}</Typography>
+    </Box>
   );
 }

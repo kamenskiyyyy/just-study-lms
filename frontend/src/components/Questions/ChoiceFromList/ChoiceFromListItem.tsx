@@ -1,42 +1,96 @@
-import { FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
+import {
+  Box,
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Typography,
+} from '@mui/material';
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 
 export interface IChoiceFromList {
   id: number;
   before: string;
   after: string;
-  answers: IAnswers[];
-  handleChange?: any;
-}
-
-interface IAnswers {
+  answers: string[];
+  correctAnswers: string[];
+  userAnswer?: string;
+  checkMode?: any;
   isCorrect: boolean;
-  answer: string;
+  handleChange?: any;
+  typeChangeWords: ITypeChoiceFromList[];
 }
 
-export function ChoiceFromListItem({ id, before, answers, after, handleChange }: IChoiceFromList) {
+export interface ITypeChoiceFromList {
+  id: number;
+  before: string;
+  after: string;
+  answers: string[];
+  correctAnswers: string[];
+  userAnswer?: string;
+  isCorrect: boolean;
+}
+
+export function ChoiceFromListItem({
+  id,
+  before,
+  answers,
+  after,
+  checkMode,
+  correctAnswers,
+  isCorrect,
+  typeChangeWords,
+}: IChoiceFromList) {
+  // @ts-ignore
+  const task: ITypeChoiceFromList = typeChangeWords.find((item) => item.id === id);
+  const [value, setValue] = useState<string>(task.userAnswer || '');
+
+  useEffect(() => {
+    task.isCorrect = correctAnswers.includes(value);
+  }, [value]);
+
+  function choiceHandler(e: SelectChangeEvent) {
+    const answer = e.target.value;
+    setValue(answer);
+    task.userAnswer = answer;
+    console.log(value);
+  }
+
   return (
-    <Typography variant="body1" display="flex" alignItems="center" sx={{ mt: 1, mb: 1 }}>
-      {id}. {before}
-      <FormControl sx={{ mr: 2, ml: 2 }}>
+    <Box display="flex" alignItems="center" sx={{ mt: 1, mb: 1 }}>
+      <Typography variant="body1">
+        {id}. {before}
+      </Typography>
+      <FormControl sx={{ mr: 2, ml: 2 }} error={checkMode && !isCorrect}>
         <InputLabel sx={{ mt: -1 }} id={id.toString()}>
           Выберите
         </InputLabel>
         <Select
-          size="small"
           sx={{ minWidth: 150 }}
           autoWidth={true}
+          disabled={checkMode}
+          size="small"
+          value={value}
           labelId={id.toString()}
           id={id.toString()}
           name={id.toString()}
           label="Выберите"
-          onChange={handleChange}>
+          onChange={choiceHandler}>
+          helperText={'Неправильный ответ'}
           {answers.map((answer) => {
-            return <MenuItem value={answer.isCorrect ? 1 : 0}>{answer.answer}</MenuItem>;
+            return (
+              <MenuItem key={answer} value={answer}>
+                {answer}
+              </MenuItem>
+            );
           })}
         </Select>
+        {checkMode && !isCorrect && <FormHelperText>Неправильный ответ</FormHelperText>}
       </FormControl>
-      {after}
-    </Typography>
+      <Typography variant="body1">{after}</Typography>
+    </Box>
   );
 }
