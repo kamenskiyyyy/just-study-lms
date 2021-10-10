@@ -9,7 +9,34 @@ import { useActions } from '../../../hooks/useActions';
 import { PreloaderForPage } from '../../../components/PreloaderForPage';
 import { ChoiceFromList } from '../../../components/Questions/ChoiceFromList/ChoiceFromList';
 import { WriteWord } from '../../../components/Questions/WriteWord/WriteWord';
-import { IWriteWordItem } from '../../../components/Questions/WriteWord/WriteWordItem';
+
+export interface ITypeWriteWord {
+  id: number;
+  before: string;
+  after: string;
+  correctAnswers: string[];
+  userAnswer?: string;
+  isCorrect: boolean;
+}
+
+const typeWriteWord: ITypeWriteWord[] = [
+  {
+    id: 1,
+    before: 'The man eat',
+    after: 'on the street. (глагол eat)',
+    correctAnswers: ['street food', 'fast food'],
+    userAnswer: '',
+    isCorrect: false,
+  },
+  {
+    id: 2,
+    before: 'The woman go to',
+    after: 'with boyfriend.',
+    correctAnswers: ['the mac'],
+    userAnswer: '',
+    isCorrect: false,
+  },
+];
 
 export function HomeWorkPage() {
   const homeworkId = useHistory().location.pathname.replace(/^\/homeworks\//, '');
@@ -20,24 +47,13 @@ export function HomeWorkPage() {
     getCurrentHomework(+homeworkId);
   }, []);
 
+  useEffect(() => {
+    console.log(typeWriteWord);
+  }, [typeWriteWord]);
+
   if (loading) {
     return <PreloaderForPage />;
   }
-
-  const typeWriteWord: IWriteWordItem[] = [
-    {
-      id: 1,
-      before: 'The man eat',
-      after: 'on the street. (глагол eat)',
-      answers: ['street food', 'fast food'],
-    },
-    {
-      id: 2,
-      before: 'The woman go to',
-      after: 'with boyfriend.',
-      answers: ['the mac'],
-    },
-  ];
 
   return (
     <Box
@@ -84,6 +100,7 @@ export function HomeWorkPage() {
                     flexDirection: 'column',
                     width: '100%',
                   }}>
+                  {/*// @ts-ignore*/}
                   <WriteWord typeWriteWord={typeWriteWord} />
                 </Paper>
               </Grid>
