@@ -26,7 +26,14 @@ export class PassEntity {
   comment: string;
 
   @Column()
-  type: 'economy' | 'business' | 'first' | 'standard' | 'premium' | 'vip' | 'speaking';
+  type:
+    | 'economy'
+    | 'business'
+    | 'first'
+    | 'standard'
+    | 'premium'
+    | 'vip'
+    | 'speaking';
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
@@ -34,14 +41,19 @@ export class PassEntity {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: Date;
 
+  @Column({ type: 'timestamp', default: null })
+  finalAt: Date;
+
   @BeforeUpdate()
   updateTimestamp() {
     this.updatedAt = new Date();
   }
 
-  @ManyToOne(() => CoursesEntity, (course) => course.coursesToUsers, {eager: true})
+  @ManyToOne(() => CoursesEntity, (course) => course.coursesToUsers, {
+    eager: true,
+  })
   course: CoursesEntity;
 
-  @ManyToOne(() => UserEntity, (user) => user.usersToCourses, {eager: true})
+  @ManyToOne(() => UserEntity, (user) => user.usersToCourses, { eager: true })
   owner: UserEntity;
 }

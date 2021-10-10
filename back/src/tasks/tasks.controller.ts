@@ -27,12 +27,12 @@ export class TasksController {
 
   @Get()
   @UseGuards(AuthGuard)
-  async getTaskUser(@Query('id') taskId: number): Promise<TasksEntity[]> {
-    return this.tasksService.getTaskUser(taskId);
+  async getTasksUser(@Query('id') taskId: number): Promise<TasksEntity[]> {
+    return this.tasksService.getTasksUser(taskId);
   }
 
   @Post()
-  @UseGuards(RoleAdminGuard)
+  @UseGuards(AuthGuard)
   async createTask(
     @Query('homework-id') homeworkId: number,
     @Query('user-id') userId: number,
@@ -42,7 +42,7 @@ export class TasksController {
   }
 
   @Put()
-  @UseGuards(RoleAdminGuard)
+  @UseGuards(AuthGuard)
   async updateTask(
     @Query('id') taskId: number,
     @Body() createTaskDto: CreateTaskDto,
