@@ -9,44 +9,6 @@ import { useActions } from '../../../hooks/useActions';
 import { PreloaderForPage } from '../../../components/PreloaderForPage';
 import { ChoiceFromList } from '../../../components/Questions/ChoiceFromList/ChoiceFromList';
 import { WriteWord } from '../../../components/Questions/WriteWord/WriteWord';
-import { ITypeChoiceFromList } from '../../../components/Questions/ChoiceFromList/ChoiceFromListItem';
-import { ITypeWriteWord } from '../../../components/Questions/WriteWord/WriteWordItem';
-
-const typeChangeWords: ITypeChoiceFromList[] = [
-  {
-    id: 1,
-    before: 'The man eat',
-    after: 'on the street.',
-    isCorrect: false,
-    correctAnswers: ['fruits'],
-    answers: ['fruits', 'snacks', 'fast food'],
-  },
-  {
-    id: 2,
-    before: 'The woman go to',
-    after: 'with boyfriend.',
-    isCorrect: false,
-    correctAnswers: ['the cinema'],
-    answers: ['the cinema', 'a mac', 'do kfc'],
-  },
-];
-
-const typeWriteWord: ITypeWriteWord[] = [
-  {
-    id: 1,
-    before: 'The man eat',
-    after: 'on the street. (глагол eat)',
-    correctAnswers: ['street food', 'fast food'],
-    isCorrect: false,
-  },
-  {
-    id: 2,
-    before: 'The woman go to',
-    after: 'with boyfriend.',
-    correctAnswers: ['the mac'],
-    isCorrect: false,
-  },
-];
 
 export function HomeWorkPage() {
   const homeworkId = useHistory().location.pathname.replace(/^\/homeworks\//, '');
@@ -56,11 +18,6 @@ export function HomeWorkPage() {
   useEffect(() => {
     getCurrentHomework(+homeworkId);
   }, []);
-
-  useEffect(() => {
-    console.log(typeChangeWords);
-    console.log(JSON.stringify(typeChangeWords));
-  }, [typeChangeWords]);
 
   if (loading) {
     return <PreloaderForPage />;
@@ -91,18 +48,7 @@ export function HomeWorkPage() {
                 <Typography variant="body1">{item.description}</Typography>
               </Paper>
             </Grid>
-            <Grid item xs={12} sx={{ mt: 1, mb: 4, justifyContent: 'center' }}>
-              <Paper
-                sx={{
-                  p: 2,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  width: '100%',
-                }}>
-                {/*// @ts-ignore*/}
-                {item.type === 'choiceFromList' && <ChoiceFromList typeChangeWords={item.body} />}
-                {/*// @ts-ignore*/}
-              </Paper>
+            {item.type === 'choiceFromList' && (
               <Grid item xs={12} sx={{ mt: 1, mb: 4, justifyContent: 'center' }}>
                 <Paper
                   sx={{
@@ -111,11 +57,23 @@ export function HomeWorkPage() {
                     flexDirection: 'column',
                     width: '100%',
                   }}>
-                  {/*// @ts-ignore*/}
-                  <WriteWord typeWriteWord={typeWriteWord} />
+                  <ChoiceFromList typeChangeWords={item.body} />
                 </Paper>
               </Grid>
-            </Grid>
+            )}
+            {item.type === 'writeWord' && (
+              <Grid item xs={12} sx={{ mt: 1, mb: 4, justifyContent: 'center' }}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    width: '100%',
+                  }}>
+                  <WriteWord typeWriteWord={item.body} />
+                </Paper>
+              </Grid>
+            )}
           </Container>
         );
       })}

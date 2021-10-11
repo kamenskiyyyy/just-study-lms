@@ -4,6 +4,7 @@ import { CourseActionCreators } from './course';
 import { PassActionCreators } from './pass';
 import { LessonActionCreators } from './lesson';
 import { HomeworkActionCreators } from './homework';
+import { TaskActionCreators } from './task';
 
 export const allActionCreators = {
   ...AuthActionCreators,
@@ -12,4 +13,5 @@ export const allActionCreators = {
   ...PassActionCreators,
   ...LessonActionCreators,
   ...HomeworkActionCreators,
+  ...TaskActionCreators,
 };

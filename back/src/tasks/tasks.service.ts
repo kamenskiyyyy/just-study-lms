@@ -23,6 +23,10 @@ export class TasksService {
     return await this.tasksRepository.find({ where: { student: userId } });
   }
 
+  async getCurrentTask(taskId: number): Promise<TasksEntity> {
+    return await this.findById(taskId);
+  }
+
   async createTask(
     homeworkId: number,
     userId: number,
