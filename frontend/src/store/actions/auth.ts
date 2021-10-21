@@ -7,7 +7,7 @@ import {
   ISetIsLoadingAction,
   ISetUserAction,
 } from '../reducers/authReducer';
-import { apiService } from '../../api';
+import { usersApi } from '../../api';
 import { IUserLogin } from '../../pages/Auth/Login.page';
 import { IUserRegister } from '../../pages/Auth/Register.page';
 
@@ -18,11 +18,11 @@ export const AuthActionCreators = {
   setError: (payload: Response): ISetAuthErrorAction => ({ type: AuthActionTypes.SET_AUTH_ERROR, payload }),
   login: (userData: IUserLogin) => async (dispatch: Dispatch<AuthAction>) => {
     dispatch(AuthActionCreators.setIsLoading(true));
-    await apiService
-      .post('/users/signin', userData)
+    await usersApi
+      .addSignin(userData)
       .then((res) => {
-        localStorage.setItem('jwt', res.data.token);
-        dispatch(AuthActionCreators.setUser(res));
+        localStorage.setItem('jwt', JSON.stringify(res.data.data.token));
+        dispatch(AuthActionCreators.setUser(res.data.data));
         dispatch(AuthActionCreators.setIsAuth(true));
       })
       .catch((error) => {
@@ -36,11 +36,11 @@ export const AuthActionCreators = {
   },
   register: (userData: IUserRegister) => async (dispatch: Dispatch<AuthAction>) => {
     dispatch(AuthActionCreators.setIsLoading(true));
-    await apiService
-      .post('/users/create', userData)
+    await usersApi
+      .register(userData)
       .then((res) => {
-        localStorage.setItem('jwt', res.data.token);
-        dispatch(AuthActionCreators.setUser(res));
+        localStorage.setItem('jwt', JSON.stringify(res.data.data.token));
+        dispatch(AuthActionCreators.setUser(res.data.data));
         dispatch(AuthActionCreators.setIsAuth(true));
       })
       .catch((error) => {

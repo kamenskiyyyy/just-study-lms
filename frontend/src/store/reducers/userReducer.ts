@@ -1,3 +1,7 @@
+export interface IUserResFromServer {
+  data: IUser;
+}
+
 export interface IUser {
   id: number;
   email: string;
@@ -9,6 +13,7 @@ export interface IUser {
   phone: number;
   telegram: string;
   status: boolean;
+  token?: string;
 }
 
 interface IUserState {

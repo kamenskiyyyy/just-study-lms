@@ -19,16 +19,22 @@ import { DeleteResult } from 'typeorm';
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
-  @Get()
+  @Get('all')
   @UseGuards(AuthGuard)
   async getAllTasks(): Promise<TasksEntity[]> {
     return this.tasksService.getAllTasks();
   }
 
+  @Get('user')
+  @UseGuards(AuthGuard)
+  async getTasksUser(@Query('id') userId: number): Promise<TasksEntity[]> {
+    return this.tasksService.getTasksUser(userId);
+  }
+
   @Get()
   @UseGuards(AuthGuard)
-  async getTasksUser(@Query('id') taskId: number): Promise<TasksEntity[]> {
-    return this.tasksService.getTasksUser(taskId);
+  async getCurrentTask(@Query('id') taskId: number): Promise<TasksEntity> {
+    return this.tasksService.getCurrentTask(taskId);
   }
 
   @Post()

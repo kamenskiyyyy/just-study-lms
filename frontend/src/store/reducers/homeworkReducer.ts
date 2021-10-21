@@ -3,9 +3,9 @@ export interface IHomework {
   title: string;
   description: string;
   prompt: string;
-  type: 'choiceFromList';
+  type: 'choiceFromList' | 'writeWord';
   done: boolean;
-  body: string;
+  body: [];
   watched: boolean;
   block: boolean;
   isPublished: boolean;
