@@ -1,14 +1,14 @@
 import { Dispatch } from 'redux';
 import { CourseAction, CourseActionTypes, ICourse } from '../reducers/courseReducer';
-import { apiService } from '../../api';
+import { coursesApi } from '../../api';
 
 export const CourseActionCreators = {
   getAllCourses: () => async (dispatch: Dispatch<CourseAction>) => {
     dispatch({ type: CourseActionTypes.GET_INFO_COURSES });
-    await apiService
-      .get('/courses', true)
+    await coursesApi
+      .getAllCourses()
       .then((res) => {
-        dispatch({ type: CourseActionTypes.GET_INFO_COURSES_ALL_SUCCESS, payload: res });
+        dispatch({ type: CourseActionTypes.GET_INFO_COURSES_ALL_SUCCESS, payload: res.data });
       })
       .catch((error) => {
         dispatch({ type: CourseActionTypes.GET_INFO_COURSES_ERROR, payload: error });
@@ -16,10 +16,10 @@ export const CourseActionCreators = {
   },
   getCurrentCourse: (id: number) => async (dispatch: Dispatch<CourseAction>) => {
     dispatch({ type: CourseActionTypes.GET_INFO_COURSES });
-    await apiService
-      .get(`/courses/course?id=${id}`, true)
+    await coursesApi
+      .getCurrentCourse(id)
       .then((res) => {
-        let data: ICourse[] = Array(res);
+        let data: ICourse[] = Array(res.data);
         dispatch({ type: CourseActionTypes.GET_INFO_COURSE_SUCCESS, payload: data });
       })
       .catch((error) => {

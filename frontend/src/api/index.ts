@@ -1,66 +1,95 @@
-import { handleOriginalResponse, IApiService, IRequest, queryToString } from './base';
+import axios, { Axios, AxiosResponse } from 'axios';
+import { IUserLogin } from '../pages/Auth/Login.page';
+import { IUserResFromServer } from '../store/reducers/userReducer';
+import { IUserRegister } from '../pages/Auth/Register.page';
+import { ITask } from '../store/reducers/tasksRecucer';
 
 class ApiService {
-  private baseUrl: string;
-  private readonly headers?: Record<string, string>;
+  request: Axios;
+  withAuth: Axios;
+  token: string | null = localStorage.getItem('jwt');
 
-  constructor(options: IApiService) {
-    this.baseUrl = options.baseUrl;
-    this.headers = options.headers;
-  }
+  constructor() {
+    this.request = axios.create({
+      baseURL: 'http://localhost:8000',
+    });
 
-  async get(path: string, auth?: boolean, query?: Record<string, string>) {
-    return this.request({ path, query, method: 'GET', auth });
-  }
-
-  post(path: string, data: Object, auth?: boolean, query?: Record<string, string>) {
-    return this.request({ path, query, method: 'POST', body: data, auth });
-  }
-
-  put(path: string, data: Object, auth?: boolean, query?: Record<string, string>) {
-    return this.request({ path, query, method: 'PUT', body: data, auth });
-  }
-
-  patch(path: string, data: Object, auth?: boolean, query?: Record<string, string>) {
-    return this.request({ path, query, method: 'PATCH', body: data, auth });
-  }
-
-  delete(path: string, data: Object, auth?: boolean, query?: Record<string, string>) {
-    return this.request({ path, query, method: 'DELETE', body: data, auth });
-  }
-
-  private async request({ path, method, ...options }: IRequest) {
-    const headers = new Headers(this.headers);
-
-    ApiService.contentDefault(headers, 'application/json; charset=utf-8', options.auth);
-
-    const query = queryToString(options.query);
-
-    const body =
-      ApiService.contentIs(headers, 'application/json') && options.body ? JSON.stringify(options.body) : undefined;
-
-    return await fetch(`${this.baseUrl}${path}${query}`, {
-      method: method,
-      headers: headers,
-      body: body,
-    })
-      .then(handleOriginalResponse)
-      .catch((data) => data);
-  }
-
-  private static contentDefault(headers: Headers, type: string, auth?: boolean): Headers {
-    if (!headers.has('content-type')) {
-      headers.set('content-type', type);
-    }
-    if (auth) {
-      headers.set('Authorization', `Bearer ${<string>localStorage.getItem('jwt')}`);
-    }
-    return headers;
-  }
-
-  private static contentIs(headers: Headers, type: string): boolean {
-    return headers.get('content-type')?.includes(type) ?? false;
+    this.withAuth = axios.create({
+      baseURL: 'http://localhost:8000',
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
   }
 }
 
-export const apiService = new ApiService({ baseUrl: 'http://localhost:8000' });
+class UsersApi extends ApiService {
+  public addSignin(userData: IUserLogin) {
+    return this.request.post<IUserLogin, AxiosResponse<IUserResFromServer>>('/users/signin', userData);
+  }
+
+  public register(userData: IUserRegister) {
+    return this.request.post<IUserRegister, AxiosResponse<IUserResFromServer>>('/users/create', userData);
+  }
+
+  public getUser() {
+    return this.withAuth.get('/users/me');
+  }
+}
+
+class CoursesApi extends ApiService {
+  public getAllCourses() {
+    return this.withAuth.get('/courses');
+  }
+
+  public getCurrentCourse(id: number) {
+    return this.withAuth.get(`/courses/course?id=${id}`);
+  }
+}
+
+class HomeworksApi extends ApiService {
+  public getAllHomeworks() {
+    return this.withAuth.get(`/homeworks/all`);
+  }
+
+  public getCurrentHomework(id: number) {
+    return this.withAuth.get(`/homeworks/homework?id=${id}`);
+  }
+}
+
+class LessonsApi extends ApiService {
+  public getCurrentLesson(id: number) {
+    return this.withAuth.get(`/lessons/lesson?id=${id}`);
+  }
+}
+
+class PassApi extends ApiService {
+  public getCurrentPass(id: number) {
+    return this.withAuth.get(`/pass?id=${id}`);
+  }
+}
+
+class TasksApi extends ApiService {
+  public getAllTasks() {
+    return this.withAuth.get('/tasks/all');
+  }
+
+  public getAllTaskUser(userId: number) {
+    return this.withAuth.get(`tasks/user?id=${userId}`);
+  }
+
+  public getCurrentTask(taskId: number) {
+    return this.withAuth.get(`/tasks?id=${taskId}`);
+  }
+
+  public postDoneTask(homeworkId: number, userId: number, taskData: ITask) {
+    return this.withAuth.post(`/tasks?homework-id=${homeworkId}&user-id=${userId}`, taskData);
+  }
+}
+
+export const usersApi = new UsersApi();
+export const coursesApi = new CoursesApi();
+export const homeworksApi = new HomeworksApi();
+export const lessonsApi = new LessonsApi();
+export const passApi = new PassApi();
+export const tasksApi = new TasksApi();

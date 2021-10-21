@@ -1,12 +1,12 @@
 import { UserAction, UserActionTypes } from '../reducers/userReducer';
 import { Dispatch } from 'redux';
-import { apiService } from '../../api';
+import { usersApi } from '../../api';
 
 export const getUserInfo = () => {
   return async (dispatch: Dispatch<UserAction>) => {
     dispatch({ type: UserActionTypes.GET_INFO_CURRENT_USER });
-    await apiService
-      .get('/users/me', true)
+    await usersApi
+      .getUser()
       .then((res) => {
         dispatch({ type: UserActionTypes.GET_INFO_CURRENT_USER_SUCCESS, payload: res.data });
       })
